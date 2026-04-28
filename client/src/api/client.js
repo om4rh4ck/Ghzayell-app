@@ -1,4 +1,11 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const defaultApiUrl =
+  typeof window !== "undefined" && window.location.hostname === "localhost" && window.location.port === "5173"
+    ? "http://localhost:5000/api"
+    : typeof window !== "undefined"
+      ? `${window.location.origin}/api`
+      : "http://localhost:5000/api";
+
+const API_URL = import.meta.env.VITE_API_URL || defaultApiUrl;
 const API_ORIGIN = API_URL.replace(/\/api$/, "");
 
 const handleUnauthorizedSession = () => {

@@ -1,6 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import fs from "fs";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -18,6 +19,7 @@ dotenv.config();
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const clientDistPath = path.join(__dirname, "../../client/dist");
 
 app.use(
   cors({
@@ -40,6 +42,14 @@ app.use("/api/gallery", galleryRoutes);
 app.use("/api/loyalty", loyaltyRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/contact", contactRoutes);
+
+if (fs.existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+
+  app.get(/^\/(?!api|uploads).*/, (req, res) => {
+    res.sendFile(path.join(clientDistPath, "index.html"));
+  });
+}
 
 app.use(notFound);
 app.use(errorHandler);

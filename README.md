@@ -110,3 +110,57 @@ Multer stores uploaded files in `server/public/uploads`. The backend exposes the
 - Serve the frontend build through Nginx or the Express server
 - Add object storage for media in production
 - Add rate limiting and audit logs for admin routes
+
+## Deploy on Hostinger
+
+This project is now ready to run with one Node.js app in production:
+
+- the React frontend is built in `client/dist`
+- the Express server can serve that built frontend automatically
+- the API stays available under `/api`
+
+### Recommended Hostinger setup
+
+1. Push the repository to GitHub
+2. Create a MySQL database in Hostinger
+3. Create a Node.js app in Hostinger or deploy on a Hostinger VPS
+4. Connect the app to this GitHub repository
+5. Use these commands:
+
+Build command:
+
+```bash
+npm install --prefix server
+npm install --prefix client
+npm run build --prefix client
+```
+
+Start command:
+
+```bash
+npm run start --prefix server
+```
+
+### Required environment variables on Hostinger
+
+```bash
+PORT=5000
+JWT_SECRET=replace-with-a-strong-secret
+CLIENT_URL=https://your-domain.com
+DB_HOST=your-hostinger-mysql-host
+DB_PORT=3306
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_CONNECTION_LIMIT=10
+```
+
+### First production setup
+
+After the first deploy, run the seed only if you want demo data:
+
+```bash
+npm run seed --prefix server
+```
+
+If you do not want demo data in production, skip the seed.
