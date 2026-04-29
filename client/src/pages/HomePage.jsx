@@ -119,7 +119,7 @@ function HomePage() {
         method: "POST",
         body: JSON.stringify(proForm)
       });
-      setProMessage("Votre message a ete envoye a l'administration Ghzaiel avec succes.");
+      setProMessage("Votre message a ete envoye a l'equipe Ghzaielle avec succes.");
       setProForm({ fullName: "", email: "", phone: "", message: "" });
     } catch (error) {
       setProError(error.message);
@@ -215,8 +215,8 @@ function HomePage() {
           </div>
           <form className="promo-banner__form" onSubmit={handleProSubmit}>
             <div className="promo-banner__form-intro">
-              <strong>Contact administrateur</strong>
-              <p>Laissez vos coordonnees et votre message. L'administration Ghzaiel vous repondra rapidement.</p>
+              <strong>Contact Ghzaielle</strong>
+              <p>Laissez vos coordonnees et votre message. L'equipe Ghzaielle vous repondra rapidement.</p>
             </div>
             <label className="promo-banner__field">
               <span>
@@ -270,7 +270,7 @@ function HomePage() {
               />
             </label>
             <button type="submit" className="button-primary button-primary--gold promo-banner__submit">
-              Envoyer au contact admin
+              Envoyer au contact Ghzaielle
             </button>
             {proError ? <p className="message error">{proError}</p> : null}
             {proMessage ? <p className="promo-banner__success">{proMessage}</p> : null}

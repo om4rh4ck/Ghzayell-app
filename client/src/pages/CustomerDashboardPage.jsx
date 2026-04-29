@@ -85,7 +85,7 @@ function CustomerDashboardPage() {
             <UserBadgeIcon />
           </span>
           <span className="stat-card__label">Compte</span>
-          <strong className="stat-card__value">{user?.role === "admin" ? "Admin" : "Client"}</strong>
+          <strong className="stat-card__value">{user?.role === "admin" ? "Ghzaielle" : "Client"}</strong>
         </article>
       </section>
       <StatusNotice

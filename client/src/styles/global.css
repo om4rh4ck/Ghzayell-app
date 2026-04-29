@@ -3463,8 +3463,9 @@ td {
   }
 
   .home-sections-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
     align-items: start;
+    gap: 1.1rem;
   }
 
   .hero--mockup {
@@ -3524,12 +3525,17 @@ td {
   }
 
   .menu-preview-stack {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     padding: 1.2rem;
   }
 
   .menu-preview-stack__intro {
     grid-column: 1 / -1;
+  }
+
+  .promo-banner {
+    position: sticky;
+    top: 0.4rem;
   }
 
   .featured-dish {
