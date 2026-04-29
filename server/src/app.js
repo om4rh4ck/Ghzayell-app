@@ -20,6 +20,8 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientDistPath = path.join(__dirname, "../../client/dist");
+const uploadsPath = path.join(__dirname, "../public/uploads");
+const legacyUploadsPath = path.join(__dirname, "public/uploads");
 
 app.use(
   cors({
@@ -29,7 +31,8 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
-app.use("/uploads", express.static(path.join(__dirname, "../public/uploads")));
+app.use("/uploads", express.static(uploadsPath));
+app.use("/uploads", express.static(legacyUploadsPath));
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
