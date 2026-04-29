@@ -121,37 +121,37 @@ function HomePage() {
           <article className="featured-dish">
             <img
               src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80"
-              alt="Brik Classique"
+              alt="Brik"
             />
             <div className="featured-dish__content">
               <div>
-                <strong>Brik Classique</strong>
-                <small>Le croustillant iconique de Ghzaiel</small>
+                <strong>Brik</strong>
+                <small>Notre specialite croustillante de Ghzaielle</small>
               </div>
               <Link to={orderEntryPath} className="featured-dish__cta">
                 Commander
               </Link>
             </div>
             <div className="featured-dish__price">
-              <span>7.00 DT</span>
+              <span>3.00 DT</span>
             </div>
           </article>
           <article className="featured-dish">
             <img
               src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80"
-              alt="Brik Gourmand"
+              alt="S7an"
             />
             <div className="featured-dish__content">
               <div>
-                <strong>Brik Gourmand</strong>
-                <small>Plus genereux, plus fondant</small>
+                <strong>S7an</strong>
+                <small>Assiette tunisienne complete et genereuse</small>
               </div>
               <Link to={orderEntryPath} className="featured-dish__cta">
                 Commander
               </Link>
             </div>
             <div className="featured-dish__price">
-              <span>11.00 DT</span>
+              <span>6.80 DT</span>
             </div>
           </article>
 
