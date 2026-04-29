@@ -6,31 +6,31 @@ export const localMenuCategories = [
         name: "Baguette thon",
         price: "7.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, olives vertes, variante et poivron marine."
       },
       {
         name: "Baguette thon + oeuf",
         price: "7.50 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, oeuf dur, olives vertes, variante et poivron marine."
       },
       {
         name: "Baguette serdine",
         price: "6.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, olives vertes, variante et poivron marine."
       },
       {
         name: "Baguette serdine + oeuf",
         price: "6.50 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur, olives vertes, variante et poivron marine."
       },
       {
         name: "Baguette oeuf",
         price: "6.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, oeufs durs, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, oeufs durs, olives vertes, variante et poivron marine."
       }
     ]
   },
@@ -42,66 +42,67 @@ export const localMenuCategories = [
         name: "Kaskrout thon",
         price: "4.70 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, olives vertes, variante et poivron marine."
       },
       {
         name: "Kaskrout thon + oeuf",
         price: "5.50 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, oeuf dur, olives vertes, variante et poivron marine."
       },
       {
         name: "Kaskrout serdine",
         price: "4.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, olives vertes, variante et poivron marine."
       },
       {
         name: "Kaskrout serdine + oeuf",
         price: "4.80 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur, olives vertes, variante et poivron marine."
       },
       {
         name: "Kaskrout oeuf",
         price: "4.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, oeuf dur, olives vertes, variante et poivron marine."
       }
     ]
   },
   {
     title: "Huitieme",
+    subtitle: "1/4 de baguette",
     items: [
       {
         name: "Huitieme thon",
         price: "3.20 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, olives vertes, variante et poivron marine."
       },
       {
         name: "Huitieme thon + oeuf",
         price: "4.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, oeuf dur, olives vertes, variante et poivron marine."
       },
       {
         name: "Huitieme serdine",
         price: "3.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, olives vertes, variante et poivron marine."
       },
       {
         name: "Huitieme serdine + oeuf",
         price: "3.50 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur, olives vertes, variante et poivron marine."
       },
       {
         name: "Huitieme oeuf",
         price: "3.00 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, oeufs durs, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, oeufs durs, olives vertes, variante et poivron marine."
       }
     ]
   },
@@ -112,19 +113,19 @@ export const localMenuCategories = [
         name: "Plat tunisien",
         price: "5.80 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, thon, oeuf dur ou oeuf coulant, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, thon, oeuf dur ou oeuf coulant, olives vertes, variante et poivron marine."
       },
       {
         name: "Plat serdine",
         price: "5.50 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur ou coulant, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, serdine en conserve, oeuf dur ou coulant, olives vertes, variante et poivron marine."
       },
       {
         name: "Plat oeuf",
         price: "4.80 DT",
         description:
-          "Harissa au choix, salade mechouia, pomme de terre a l'eau, salade tunisienne fraiche, oeuf dur ou coulant, olives vertes, variante et poivron marine."
+          "Harissa au choix, salade mechouia, pomme de terre cuite a l'eau, salade tunisienne fraiche, oeuf dur ou coulant, olives vertes, variante et poivron marine."
       },
       {
         name: "Plat salade tunisienne",
@@ -185,7 +186,7 @@ export const localMenuCategories = [
         name: "Brik en sauce",
         price: "5.00 DT",
         description:
-          "Brik servie en assiette avec salade mechouia, pomme de terre a l'eau, salade tunisienne, olives vertes, variante et poivron marine."
+          "Brik servie en assiette avec salade mechouia, pomme de terre cuite a l'eau, salade tunisienne, olives vertes, variante et poivron marine."
       }
     ]
   },
