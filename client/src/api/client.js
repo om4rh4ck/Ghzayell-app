@@ -29,7 +29,22 @@ const readAuthData = () => {
 export const getMediaUrl = (url) => {
   if (!url) return "";
   if (url.startsWith("http")) return url;
-  return `${API_ORIGIN}${url}`;
+
+  const normalized = String(url)
+    .trim()
+    .replace(/\\/g, "/")
+    .replace(/^\.?\//, "")
+    .replace(/^public\//i, "");
+
+  if (normalized.startsWith("uploads/")) {
+    return `${API_ORIGIN}/${normalized}`;
+  }
+
+  if (normalized.startsWith("/")) {
+    return `${API_ORIGIN}${normalized}`;
+  }
+
+  return `${API_ORIGIN}/${normalized}`;
 };
 
 export const apiRequest = async (path, options = {}) => {

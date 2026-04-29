@@ -1,5 +1,26 @@
 import { getDb } from "../config/db.js";
 
+const normalizeMediaPath = (value) => {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  if (/^https?:\/\//i.test(raw)) return raw;
+
+  const withoutPublicPrefix = raw
+    .replace(/\\/g, "/")
+    .replace(/^\.?\//, "")
+    .replace(/^public\//i, "");
+
+  if (withoutPublicPrefix.startsWith("uploads/")) {
+    return `/${withoutPublicPrefix}`;
+  }
+
+  if (withoutPublicPrefix.startsWith("/uploads/")) {
+    return withoutPublicPrefix;
+  }
+
+  return `/${withoutPublicPrefix}`;
+};
+
 export const mapUser = (row) => ({
   _id: String(row.id),
   id: String(row.id),
@@ -22,7 +43,7 @@ export const mapProduct = (row) => {
     name: row.name,
     description: row.description,
     price,
-    image: row.image,
+    image: normalizeMediaPath(row.image),
     category: row.category,
     featured: Boolean(row.featured),
     promoActive,
@@ -39,7 +60,7 @@ export const mapGalleryItem = (row) => ({
   id: String(row.id),
   title: row.title,
   type: row.type,
-  url: row.url,
+  url: normalizeMediaPath(row.url),
   createdAt: row.created_at,
   updatedAt: row.updated_at
 });
@@ -90,7 +111,7 @@ export const mapOrder = (row, items = []) => ({
     name: item.name,
     price: Number(item.price),
     quantity: Number(item.quantity),
-    image: item.image
+    image: normalizeMediaPath(item.image)
   })),
   total: Number(row.total),
   firstName: row.first_name || "",
