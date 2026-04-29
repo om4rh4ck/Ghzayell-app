@@ -106,18 +106,17 @@ function Header() {
             <ProfileIcon />
           </NavLink>
         </div>
+        <nav className="desktop-header-nav" aria-label="Navigation principale">
+          {appLinks.map((link) => (
+            <NavLink key={`desktop-${link.to}-${link.label}`} to={link.to} className="desktop-header-nav__item">
+              <span className="desktop-header-nav__icon" aria-hidden="true">
+                <link.icon />
+              </span>
+              <span>{link.label}</span>
+            </NavLink>
+          ))}
+        </nav>
       </div>
-
-      <nav className="desktop-header-nav" aria-label="Navigation principale">
-        {appLinks.map((link) => (
-          <NavLink key={`desktop-${link.to}-${link.label}`} to={link.to} className="desktop-header-nav__item">
-            <span className="desktop-header-nav__icon" aria-hidden="true">
-              <link.icon />
-            </span>
-            <span>{link.label}</span>
-          </NavLink>
-        ))}
-      </nav>
 
       {isMenuOpen && (
         <div className="header-menu">

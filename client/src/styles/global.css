@@ -3030,7 +3030,6 @@ td {
   .web-app-frame {
     display: grid;
     grid-template-rows: auto 1fr auto;
-    min-height: calc(100vh - 6rem);
     border-radius: 24px;
     padding: 0.65rem;
     background: rgba(255, 250, 242, 0.52);
@@ -3044,8 +3043,12 @@ td {
   }
 
   .site-header {
-    padding: 0.65rem 1rem;
-    border-radius: 28px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.62rem 0.95rem;
+    border-radius: 22px;
     border: 1px solid rgba(90, 56, 30, 0.16);
     box-shadow: 0 12px 28px rgba(90, 56, 30, 0.12);
   }
@@ -3062,10 +3065,14 @@ td {
 
   .desktop-header-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 0.7rem;
-    padding: 0.1rem 0.1rem 0;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    overflow-x: auto;
   }
 
   .desktop-header-nav__item {
@@ -3077,8 +3084,9 @@ td {
     background: rgba(255, 248, 240, 0.78);
     border: 1px solid rgba(119, 76, 41, 0.14);
     box-shadow: 0 6px 16px rgba(92, 56, 25, 0.08);
-    font-size: 0.86rem;
+    font-size: 0.8rem;
     font-weight: 700;
+    white-space: nowrap;
   }
 
   .desktop-header-nav__item.active {
@@ -3109,7 +3117,7 @@ td {
   }
 
   .home-screen {
-    width: min(100%, 1280px);
+    width: min(100%, 1200px);
     margin: 0 auto;
     gap: 1.2rem;
   }
@@ -3125,14 +3133,15 @@ td {
 
   .hero--mockup,
   .brik-afrik-card {
-    min-height: 290px;
-    max-height: 330px;
+    min-height: 220px;
+    max-height: 250px;
   }
 
   .hero-poster-image,
   .brik-afrik-image {
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
   }
 
   .menu-local-board--detailed {
@@ -3170,16 +3179,16 @@ td {
   }
 
   .home-sections-grid {
-    grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+    grid-template-columns: 1fr;
     align-items: start;
   }
 
   .hero--mockup {
-    min-height: 310px;
+    min-height: 220px;
   }
 
   .hero-poster-image {
-    min-height: 310px;
+    min-height: 220px;
   }
 
   .hero__content--mockup {
@@ -3308,16 +3317,7 @@ td {
   }
 
   .mobile-tabbar {
-    position: static;
-    left: auto;
-    right: auto;
-    bottom: auto;
-    margin-top: 0.35rem;
-    padding: 0.5rem;
-    border-radius: 20px;
-    border: 1px solid rgba(90, 56, 30, 0.08);
-    box-shadow: 0 10px 24px rgba(88, 51, 21, 0.08);
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    display: none;
   }
 }
 
