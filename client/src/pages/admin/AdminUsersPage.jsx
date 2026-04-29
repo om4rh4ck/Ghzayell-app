@@ -12,7 +12,11 @@ function AdminUsersPage() {
   };
 
   useEffect(() => {
-    loadUsers().catch((err) => setError(err.message));
+    loadUsers().catch((err) => {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    });
   }, []);
 
   const handleAddPoints = async (userId) => {
@@ -27,7 +31,9 @@ function AdminUsersPage() {
       setPointsByUser((current) => ({ ...current, [userId]: "" }));
       await loadUsers();
     } catch (err) {
-      setError(err.message);
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
     }
   };
 

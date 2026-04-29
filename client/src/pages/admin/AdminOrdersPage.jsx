@@ -20,7 +20,11 @@ function AdminOrdersPage() {
   };
 
   useEffect(() => {
-    loadOrders().catch((err) => setError(err.message));
+    loadOrders().catch((err) => {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    });
   }, []);
 
   const updateStatus = async (id, status) => {
@@ -35,7 +39,9 @@ function AdminOrdersPage() {
       await loadOrders();
       setMessage("Le statut de la commande a ete mis a jour avec succes.");
     } catch (err) {
-      setError(err.message);
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
     }
   };
 

@@ -14,7 +14,11 @@ function AdminDashboardPage() {
         setStats(statsData);
         setContacts(contactsData);
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => {
+        if (!err?.silentRedirect) {
+          setError(err.message);
+        }
+      });
   }, []);
 
   if (error) {

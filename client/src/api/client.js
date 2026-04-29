@@ -12,7 +12,17 @@ const handleUnauthorizedSession = () => {
   localStorage.removeItem("ghzaiel-auth");
 
   if (typeof window !== "undefined" && window.location.pathname !== "/auth") {
-    window.location.href = "/auth";
+    window.location.replace("/auth");
+  }
+};
+
+const buildApiError = (message, extras = {}) => Object.assign(new Error(message), extras);
+
+const readAuthData = () => {
+  try {
+    return JSON.parse(localStorage.getItem("ghzaiel-auth") || "null");
+  } catch {
+    return null;
   }
 };
 
@@ -23,7 +33,7 @@ export const getMediaUrl = (url) => {
 };
 
 export const apiRequest = async (path, options = {}) => {
-  const authData = JSON.parse(localStorage.getItem("ghzaiel-auth") || "null");
+  const authData = readAuthData();
   const headers = {
     "Content-Type": "application/json",
     ...(options.headers || {})
@@ -44,21 +54,19 @@ export const apiRequest = async (path, options = {}) => {
   if (!response.ok) {
     if (response.status === 401) {
       handleUnauthorizedSession();
-    }
-    if (response.status === 401) {
-      throw new Error("Votre session a expire. Merci de vous reconnecter.");
+      throw buildApiError("", { silentRedirect: true, status: 401 });
     }
     if (response.status === 403) {
-      throw new Error("Acces refuse pour ce compte.");
+      throw buildApiError("Acces refuse pour ce compte.", { status: 403 });
     }
-    throw new Error(data?.message || "Request failed");
+    throw buildApiError(data?.message || "Request failed", { status: response.status });
   }
 
   return data;
 };
 
 export const apiFormRequest = async (path, formData, method = "POST") => {
-  const authData = JSON.parse(localStorage.getItem("ghzaiel-auth") || "null");
+  const authData = readAuthData();
   const headers = {};
 
   if (authData?.token) {
@@ -76,14 +84,12 @@ export const apiFormRequest = async (path, formData, method = "POST") => {
   if (!response.ok) {
     if (response.status === 401) {
       handleUnauthorizedSession();
-    }
-    if (response.status === 401) {
-      throw new Error("Votre session a expire. Merci de vous reconnecter.");
+      throw buildApiError("", { silentRedirect: true, status: 401 });
     }
     if (response.status === 403) {
-      throw new Error("Acces refuse pour ce compte.");
+      throw buildApiError("Acces refuse pour ce compte.", { status: 403 });
     }
-    throw new Error(data?.message || "Request failed");
+    throw buildApiError(data?.message || "Request failed", { status: response.status });
   }
 
   return data;

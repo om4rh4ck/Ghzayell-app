@@ -15,7 +15,11 @@ function AdminGalleryPage() {
   };
 
   useEffect(() => {
-    loadGallery().catch((err) => setError(err.message));
+    loadGallery().catch((err) => {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    });
   }, []);
 
   const handleSubmit = async (event) => {
@@ -42,13 +46,21 @@ function AdminGalleryPage() {
       setFile(null);
       await loadGallery();
     } catch (err) {
-      setError(err.message);
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
     }
   };
 
   const handleDelete = async (id) => {
-    await apiRequest(`/gallery/${id}`, { method: "DELETE" });
-    await loadGallery();
+    try {
+      await apiRequest(`/gallery/${id}`, { method: "DELETE" });
+      await loadGallery();
+    } catch (err) {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    }
   };
 
   return (

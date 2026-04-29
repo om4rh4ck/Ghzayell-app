@@ -54,7 +54,11 @@ function AdminMenuPage() {
       setCategories(mergedCategories);
     };
 
-    loadData().catch((err) => setError(err.message));
+    loadData().catch((err) => {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    });
   }, []);
 
   const normalizeCategoryPayload = (selection, customValue) =>
@@ -86,10 +90,10 @@ function AdminMenuPage() {
           .filter(([key]) => key !== "_id")
           .forEach(([key, value]) => formData.append(key, value));
         formData.append("image", file);
-        await apiFormRequest(isEditing ? `/products/${form._id}` : "/products", formData, isEditing ? "PUT" : "POST");
+        await apiFormRequest("/products", formData, "POST");
       } else {
-        await apiRequest(isEditing ? `/products/${form._id}` : "/products", {
-          method: isEditing ? "PUT" : "POST",
+        await apiRequest("/products", {
+          method: "POST",
           body: JSON.stringify({
             name: form.name,
             description: form.description,
@@ -113,7 +117,9 @@ function AdminMenuPage() {
       );
       setSuccessMessage("Produit ajoute avec succes.");
     } catch (err) {
-      setError(err.message);
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
     }
   };
 
@@ -126,7 +132,9 @@ function AdminMenuPage() {
       await loadProducts();
       setSuccessMessage("Produit supprime avec succes.");
     } catch (err) {
-      setError(err.message);
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
     }
   };
 
@@ -193,7 +201,9 @@ function AdminMenuPage() {
       closeEditModal();
       setSuccessMessage("Le produit selectionne a ete mis a jour avec succes.");
     } catch (err) {
-      setError(err.message);
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
     }
   };
 

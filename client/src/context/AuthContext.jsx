@@ -3,17 +3,31 @@ import { apiRequest } from "../api/client";
 
 export const AuthContext = createContext(null);
 
+const STORAGE_KEY = "ghzaiel-auth";
+
+const readStoredAuth = () => {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+  } catch {
+    return null;
+  }
+};
+
+const writeStoredAuth = (auth) => {
+  if (auth) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(auth));
+    return;
+  }
+  localStorage.removeItem(STORAGE_KEY);
+};
+
 export function AuthProvider({ children }) {
-  const [auth, setAuth] = useState(() => JSON.parse(localStorage.getItem("ghzaiel-auth") || "null"));
+  const [auth, setAuth] = useState(() => readStoredAuth());
   const [isReady, setIsReady] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (auth) {
-      localStorage.setItem("ghzaiel-auth", JSON.stringify(auth));
-    } else {
-      localStorage.removeItem("ghzaiel-auth");
-    }
+    writeStoredAuth(auth);
   }, [auth]);
 
   useEffect(() => {
@@ -50,6 +64,8 @@ export function AuthProvider({ children }) {
         method: "POST",
         body: JSON.stringify(payload)
       });
+      // Persist token immediately to prevent post-login race on first protected requests.
+      writeStoredAuth(data);
       setAuth(data);
       return data;
     } finally {
@@ -79,7 +95,10 @@ export function AuthProvider({ children }) {
       loading,
       login: (payload) => submitAuth("/auth/login", payload),
       register: (payload) => submitAuth("/auth/register", payload),
-      logout: () => setAuth(null),
+      logout: () => {
+        writeStoredAuth(null);
+        setAuth(null);
+      },
       refreshProfile
     }),
     [auth, isReady, loading]
