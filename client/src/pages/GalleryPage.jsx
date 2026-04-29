@@ -31,6 +31,19 @@ function GalleryPage() {
           </p>
         </div>
       </section>
+      <section className="card event-highlight">
+        <div className="event-highlight__media">
+          <img src="/assets/torchi2024.png" alt="Evenement Torchi Awards 2024" />
+        </div>
+        <div className="event-highlight__content">
+          <h2>Evenement Torchi Awards 2024</h2>
+          <p>
+            Ghzaielle gagne la meilleure brik a Djerba lors de l'evenement Torchi Awards 2024, une distinction qui
+            confirme notre savoir-faire artisanal.
+          </p>
+          <p>Premiere participation officielle aux evenements: 2025.</p>
+        </div>
+      </section>
       {error && <p className="message error">{error}</p>}
       <section className="gallery-grid">
         {items.map((item) => (
