@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import StatusNotice from "../components/StatusNotice.jsx";
 import { useAuth } from "../hooks/useAuth";
 
 const GiftIcon = () => (
@@ -87,6 +88,11 @@ function CustomerDashboardPage() {
           <strong className="stat-card__value">{user?.role === "admin" ? "Admin" : "Client"}</strong>
         </article>
       </section>
+      <StatusNotice
+        variant="reward"
+        title="Experience client premium"
+        message="Chaque commande confirmee vous rapporte des points. Suivez vos statuts et avantages en direct."
+      />
 
       <section className="customer-dashboard-grid">
         <Link to="/menu" className="admin-quick-card">

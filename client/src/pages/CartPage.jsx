@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { apiRequest, getMediaUrl } from "../api/client";
+import StatusNotice from "../components/StatusNotice.jsx";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 
@@ -380,8 +381,14 @@ function CartPage() {
               <span>Confirmer la commande</span>
             </button>
           </div>
-          {message && <p className="message success">{message}</p>}
-          {error && <p className="message error">{error}</p>}
+          {message ? (
+            <StatusNotice
+              variant="success"
+              title="Commande envoyee avec succes"
+              message={`${message} Vos points fidelite seront mis a jour automatiquement.`}
+            />
+          ) : null}
+          {error ? <StatusNotice variant="error" title="Action impossible" message={error} /> : null}
         </form>
       </section>
     </div>

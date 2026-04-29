@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiRequest } from "../api/client";
+import StatusNotice from "../components/StatusNotice.jsx";
 
 const statusLabels = {
   pending: "En attente",
@@ -40,7 +41,14 @@ function OrdersPage() {
           <h1>Suivez chaque commande et vos recompenses.</h1>
         </div>
       </section>
-      {error && <p className="message error">{error}</p>}
+      {error ? <StatusNotice variant="error" title="Echec de chargement" message={error} /> : null}
+      {!error && orders.length > 0 ? (
+        <StatusNotice
+          variant="info"
+          title="Suivi client en temps reel"
+          message="Consultez vos statuts de commande, livraisons et points gagnes dans une vue unique."
+        />
+      ) : null}
       {!error && orders.length === 0 ? (
         <section className="card orders-empty-card">
           <h3>Aucune commande pour le moment</h3>

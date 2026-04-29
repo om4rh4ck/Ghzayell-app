@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { apiRequest } from "../api/client";
+import StatusNotice from "../components/StatusNotice.jsx";
 
 function PointsPage() {
   const [summary, setSummary] = useState(null);
@@ -12,7 +13,7 @@ function PointsPage() {
   }, []);
 
   if (error) {
-    return <p className="message error">{error}</p>;
+    return <StatusNotice variant="error" title="Erreur fidelite" message={error} />;
   }
 
   if (!summary) {
@@ -28,6 +29,11 @@ function PointsPage() {
         </div>
         <p>Gagnez des points a chaque commande</p>
       </section>
+      <StatusNotice
+        variant="reward"
+        title="Recompenses actives"
+        message="Apres chaque commande validee, vos nouveaux points sont credites automatiquement sur votre compte."
+      />
 
       <section className="reward-grid reward-grid--stacked">
         {summary.tiers.map((tier) => (
