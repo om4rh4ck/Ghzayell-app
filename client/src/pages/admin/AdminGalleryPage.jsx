@@ -5,7 +5,6 @@ function AdminGalleryPage() {
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("image");
-  const [url, setUrl] = useState("");
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
 
@@ -27,22 +26,19 @@ function AdminGalleryPage() {
     setError("");
 
     try {
-      if (file) {
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("type", type);
-        formData.append("media", file);
-        await apiFormRequest("/gallery", formData);
-      } else {
-        await apiRequest("/gallery", {
-          method: "POST",
-          body: JSON.stringify({ title, type, url })
-        });
+      if (!file) {
+        setError("Media obligatoire: veuillez choisir un fichier.");
+        return;
       }
+
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("type", type);
+      formData.append("media", file);
+      await apiFormRequest("/gallery", formData);
 
       setTitle("");
       setType("image");
-      setUrl("");
       setFile(null);
       await loadGallery();
     } catch (err) {
@@ -67,9 +63,9 @@ function AdminGalleryPage() {
     <div className="stack">
       <section className="section-heading">
         <div>
-          <span className="eyebrow">Galerie</span>
-          <h1>Gestion de la galerie</h1>
-          <p>Ajoutez des images et des videos pour mettre vos produits en valeur.</p>
+          <span className="eyebrow">Menu Ghzaielle</span>
+          <h1>Gestion media du menu Ghzaielle</h1>
+          <p>Ajoutez des images et des videos avec upload direct pour vos produits.</p>
         </div>
       </section>
 
@@ -84,11 +80,11 @@ function AdminGalleryPage() {
             <option value="image">Image</option>
             <option value="video">Video</option>
           </select>
-          <input placeholder="URL du media" value={url} onChange={(event) => setUrl(event.target.value)} />
           <input
             type="file"
             accept={type === "image" ? "image/*" : "video/*"}
             onChange={(event) => setFile(event.target.files?.[0] || null)}
+            required
           />
           <button type="submit" className="button-primary">Ajouter a la galerie</button>
           {error && <p className="message error">{error}</p>}

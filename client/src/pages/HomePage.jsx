@@ -115,7 +115,7 @@ function HomePage() {
       <section className="home-sections-grid">
         <section className="menu-preview-stack">
           <div className="menu-preview-stack__intro">
-            <h2>Nos produit a commander en ligne</h2>
+            <h2>Menu Ghzaielle a commander en ligne</h2>
           </div>
 
           <article className="featured-dish">

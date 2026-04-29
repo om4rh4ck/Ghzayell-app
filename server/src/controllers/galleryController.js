@@ -7,11 +7,15 @@ export const getGalleryItems = async (req, res) => {
 };
 
 export const createGalleryItem = async (req, res) => {
-  const fileUrl = req.file ? `/uploads/${req.file.filename}` : undefined;
+  if (!req.file) {
+    return res.status(400).json({ message: "Media obligatoire: veuillez uploader un fichier." });
+  }
+
+  const fileUrl = `/uploads/${req.file.filename}`;
   const [result] = await getDb().query("INSERT INTO gallery (title, type, url) VALUES (?, ?, ?)", [
     req.body.title,
     req.body.type,
-    fileUrl || req.body.url
+    fileUrl
   ]);
 
   const [rows] = await getDb().query("SELECT * FROM gallery WHERE id = ? LIMIT 1", [result.insertId]);
