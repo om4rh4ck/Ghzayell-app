@@ -8,49 +8,6 @@ import { useAuth } from "../hooks/useAuth";
 
 const onlineCategories = ["TOUS", "BRIKA", "S7AN", "3EJJA", "LABLEBI", "HAJA TETCHRAB"];
 
-const fallbackOnlineProducts = [
-  {
-    _id: "online-1",
-    name: "Brik Gourmand",
-    description: "Commande en ligne avec preparation rapide.",
-    price: 11,
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80",
-    category: "BRIKA"
-  },
-  {
-    _id: "online-2",
-    name: "Pack Livraison",
-    description: "Ideal pour commander a domicile et gagner vos points.",
-    price: 15,
-    image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1200&q=80",
-    category: "S7AN"
-  },
-  {
-    _id: "online-3",
-    name: "Ojja Tunisienne",
-    description: "Ojja relevee avec saveur tunisienne authentique.",
-    price: 9.5,
-    image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1200&q=80",
-    category: "3EJJA"
-  },
-  {
-    _id: "online-4",
-    name: "Lablebi Maison",
-    description: "Bol chaud et genereux pour vos commandes en ligne.",
-    price: 8,
-    image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80",
-    category: "LABLEBI"
-  },
-  {
-    _id: "online-5",
-    name: "Citronnade Fraiche",
-    description: "Boisson fraiche a ajouter a votre commande.",
-    price: 4.5,
-    image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1200&q=80",
-    category: "HAJA TETCHRAB"
-  }
-];
-
 function detectOnlineCategory(product) {
   const text = `${product.name ?? ""} ${product.description ?? ""} ${product.category ?? ""}`.toLowerCase();
 
@@ -105,8 +62,7 @@ function MenuPage() {
     navigate("/cart");
   };
 
-  const onlineProducts = products.length ? products : fallbackOnlineProducts;
-  const normalizedOnlineProducts = onlineProducts.map((product) => ({
+  const normalizedOnlineProducts = products.map((product) => ({
     ...product,
     category: detectOnlineCategory(product)
   }));

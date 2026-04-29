@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { apiRequest } from "../api/client";
+import { apiRequest, getMediaUrl } from "../api/client";
 import { localMenuCategories } from "../data/localMenu.js";
 import { useAuth } from "../hooks/useAuth";
 
@@ -43,6 +43,22 @@ function HomePage() {
   const [proForm, setProForm] = useState({ fullName: "", email: "", phone: "", message: "" });
   const [proMessage, setProMessage] = useState("");
   const [proError, setProError] = useState("");
+  const [featuredOnlineProducts, setFeaturedOnlineProducts] = useState([
+    {
+      key: "brik",
+      name: "Brik",
+      description: "Notre specialite croustillante de Ghzaielle",
+      price: 3,
+      image: ""
+    },
+    {
+      key: "s7an",
+      name: "S7an",
+      description: "Assiette tunisienne complete et genereuse",
+      price: 6.8,
+      image: ""
+    }
+  ]);
   const orderEntryPath = user ? "/menu" : "/auth";
   const publicSiteUrl =
     (typeof window !== "undefined" && window.location.origin) ||
@@ -52,6 +68,46 @@ function HomePage() {
   )}`;
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent("Rue Med Ferjeni, Houmt Souk 4180")}&z=15&output=embed`;
   const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Rue Med Ferjeni, Houmt Souk 4180")}`;
+
+  useEffect(() => {
+    const resolvePrice = (product, fallbackPrice) =>
+      Number(product?.effectivePrice ?? product?.promoPrice ?? product?.price ?? fallbackPrice);
+
+    const findProductByKeywords = (products, keywords) =>
+      products.find((product) => {
+        const text = `${product.name || ""} ${product.description || ""} ${product.category || ""}`.toLowerCase();
+        return keywords.some((keyword) => text.includes(keyword));
+      });
+
+    const loadFeaturedProducts = async () => {
+      try {
+        const products = await apiRequest("/products");
+        const brikProduct = findProductByKeywords(products, ["brik"]);
+        const s7anProduct = findProductByKeywords(products, ["s7an", "plat"]);
+
+        setFeaturedOnlineProducts([
+          {
+            key: "brik",
+            name: brikProduct?.name || "Brik",
+            description: "Notre specialite croustillante de Ghzaielle",
+            price: resolvePrice(brikProduct, 3),
+            image: brikProduct?.image || ""
+          },
+          {
+            key: "s7an",
+            name: s7anProduct?.name || "S7an",
+            description: "Assiette tunisienne complete et genereuse",
+            price: resolvePrice(s7anProduct, 6.8),
+            image: s7anProduct?.image || ""
+          }
+        ]);
+      } catch {
+        // Keep initial featured products; images stay empty until manually uploaded.
+      }
+    };
+
+    loadFeaturedProducts();
+  }, []);
 
   const handleProSubmit = async (event) => {
     event.preventDefault();
@@ -118,42 +174,27 @@ function HomePage() {
             <h2>Menu Ghzaielle a commander en ligne</h2>
           </div>
 
-          <article className="featured-dish">
-            <img
-              src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80"
-              alt="Brik"
-            />
-            <div className="featured-dish__content">
-              <div>
-                <strong>Brik</strong>
-                <small>Notre specialite croustillante de Ghzaielle</small>
-              </div>
-              <Link to={orderEntryPath} className="featured-dish__cta">
-                Commander
-              </Link>
-            </div>
-            <div className="featured-dish__price">
-              <span>3.00 DT</span>
-            </div>
-          </article>
-          <article className="featured-dish">
-            <img
-              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80"
-              alt="S7an"
-            />
-            <div className="featured-dish__content">
-              <div>
-                <strong>S7an</strong>
-                <small>Assiette tunisienne complete et genereuse</small>
-              </div>
-              <Link to={orderEntryPath} className="featured-dish__cta">
-                Commander
-              </Link>
-            </div>
-            <div className="featured-dish__price">
-              <span>6.80 DT</span>
-            </div>
-          </article>
+          {featuredOnlineProducts.map((product) => {
+            const mediaUrl = getMediaUrl(product.image);
+
+            return (
+              <article key={product.key} className="featured-dish">
+                {mediaUrl ? <img src={mediaUrl} alt={product.name} /> : null}
+                <div className="featured-dish__content">
+                  <div>
+                    <strong>{product.name}</strong>
+                    <small>{product.description}</small>
+                  </div>
+                  <Link to={orderEntryPath} className="featured-dish__cta">
+                    Commander
+                  </Link>
+                </div>
+                <div className="featured-dish__price">
+                  <span>{Number(product.price).toFixed(2)} DT</span>
+                </div>
+              </article>
+            );
+          })}
 
           <Link to="/menu" className="menu-preview-stack__link menu-preview-stack__link--bottom">
             Voir Tous

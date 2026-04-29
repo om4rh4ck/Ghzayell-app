@@ -11,6 +11,7 @@ const AddCartIcon = () => (
 
 function ProductCard({ product, onAddToCart }) {
   const displayPrice = product.effectivePrice ?? product.promoPrice ?? product.price;
+  const mediaUrl = getMediaUrl(product.image);
 
   return (
     <article className="product-card product-card--mockup">
@@ -36,7 +37,7 @@ function ProductCard({ product, onAddToCart }) {
           </button>
         </div>
       </div>
-      <img src={getMediaUrl(product.image)} alt={product.name} className="product-card__image" />
+      {mediaUrl ? <img src={mediaUrl} alt={product.name} className="product-card__image" /> : null}
     </article>
   );
 }
