@@ -108,16 +108,58 @@ function CartPage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  const resolveCheckoutItems = async () => {
+    const products = await apiRequest("/products");
+    const productIdSet = new Set(products.map((product) => String(product.id || product._id)));
+    const productByName = new Map(products.map((product) => [String(product.name || "").trim().toLowerCase(), String(product.id || product._id)]));
+
+    const normalizedItems = [];
+    const invalidItems = [];
+
+    for (const item of items) {
+      const rawProductId = String(item.product || "").trim();
+      const itemName = String(item.name || "").trim().toLowerCase();
+      let productId = rawProductId;
+
+      if (!productIdSet.has(productId) && itemName) {
+        productId = productByName.get(itemName) || productId;
+      }
+
+      if (!productIdSet.has(productId)) {
+        invalidItems.push(item);
+        continue;
+      }
+
+      normalizedItems.push({
+        product: productId,
+        quantity: item.quantity
+      });
+    }
+
+    return { normalizedItems, invalidItems };
+  };
+
   const handleCheckout = async (event) => {
     event.preventDefault();
     setError("");
     setMessage("");
 
     try {
+      const { normalizedItems, invalidItems } = await resolveCheckoutItems();
+
+      if (invalidItems.length) {
+        invalidItems.forEach((item) => removeFromCart(item.product));
+      }
+
+      if (!normalizedItems.length) {
+        setError("Votre panier contient des produits obsoletes. Ajoutez de nouveau vos produits puis reessayez.");
+        return;
+      }
+
       await apiRequest("/orders", {
         method: "POST",
         body: JSON.stringify({
-          items: items.map((item) => ({ product: item.product, quantity: item.quantity })),
+          items: normalizedItems,
           firstName,
           lastName,
           phone,
@@ -135,7 +177,11 @@ function CartPage() {
       setDeliveryAddress("");
       setNotes("");
       setRedeemPoints(0);
-      setMessage("Votre commande a ete confirmee avec succes.");
+      setMessage(
+        invalidItems.length
+          ? "Commande confirmee. Certains anciens produits non valides ont ete retires du panier."
+          : "Votre commande a ete confirmee avec succes."
+      );
       await refreshProfile();
     } catch (err) {
       setError(err.message);
