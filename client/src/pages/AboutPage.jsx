@@ -8,6 +8,7 @@ function AboutPage() {
         <div className="about-hero__content">
           <span className="eyebrow">A propos</span>
           <h1>Mohamed Ghzaielle - Fondateur de Brik Ghzaielle Djerba</h1>
+          <p>Ghzaielle fonde en 1987 a Houmt Souk Djerba.</p>
           <p>
             Originaires de l'ile de Djerba, nous portons en nous une passion profonde pour la gastronomie
             traditionnelle et la valorisation du patrimoine culinaire tunisien.
