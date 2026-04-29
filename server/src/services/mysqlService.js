@@ -18,6 +18,10 @@ const normalizeMediaPath = (value) => {
     return withoutPublicPrefix;
   }
 
+  if (!withoutPublicPrefix.includes("/")) {
+    return `/uploads/${withoutPublicPrefix}`;
+  }
+
   return `/${withoutPublicPrefix}`;
 };
 
