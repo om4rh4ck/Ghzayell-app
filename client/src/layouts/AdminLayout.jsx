@@ -114,7 +114,7 @@ function AdminLayout() {
               <span className="admin-nav__icon">
                 <GalleryIcon />
               </span>
-              <span>Galerie</span>
+              <span>Evenements</span>
             </NavLink>
           </nav>
 

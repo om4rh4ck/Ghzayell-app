@@ -15,8 +15,20 @@ function GalleryPage() {
     <div className="stack">
       <section className="section-heading">
         <div>
-          <span className="eyebrow">Galerie</span>
-          <h1>Moments gourmands et coulisses de la cuisine.</h1>
+          <span className="eyebrow">Evenements</span>
+          <h1>Reussites Ghzaielle et moments forts.</h1>
+        </div>
+      </section>
+      <section className="card event-highlight">
+        <div className="event-highlight__media">
+          <img src="/assets/evetorchi.png" alt="Torchi Awards - meilleure brik a Djerba" />
+        </div>
+        <div className="event-highlight__content">
+          <h2>Torchi Awards - Meilleure Brik a Djerba</h2>
+          <p>
+            Ghzaielle celebre une grande reussite: distinction recue lors de l'evenement Torchi Awards pour la
+            meilleure brik a Djerba.
+          </p>
         </div>
       </section>
       {error && <p className="message error">{error}</p>}

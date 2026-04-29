@@ -63,8 +63,8 @@ function AdminDashboardPage() {
           <span>Consulter les comptes et offrir des points cadeaux.</span>
         </Link>
         <Link to="/admin/gallery" className="admin-quick-card">
-          <strong>Galerie</strong>
-          <span>Ajouter photos et videos de vos produits.</span>
+          <strong>Evenements</strong>
+          <span>Ajouter photos et videos de vos reussites et evenements.</span>
         </Link>
       </section>
       <section className="card admin-contact-card">

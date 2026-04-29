@@ -63,9 +63,9 @@ function AdminGalleryPage() {
     <div className="stack">
       <section className="section-heading">
         <div>
-          <span className="eyebrow">Menu Ghzaielle</span>
-          <h1>Gestion media du menu Ghzaielle</h1>
-          <p>Ajoutez des images et des videos avec upload direct pour vos produits.</p>
+          <span className="eyebrow">Evenements</span>
+          <h1>Gestion des evenements Ghzaielle</h1>
+          <p>Ajoutez des images et des videos avec upload direct pour vos evenements et reussites.</p>
         </div>
       </section>
 
@@ -86,7 +86,7 @@ function AdminGalleryPage() {
             onChange={(event) => setFile(event.target.files?.[0] || null)}
             required
           />
-          <button type="submit" className="button-primary">Ajouter a la galerie</button>
+          <button type="submit" className="button-primary">Ajouter a la section evenements</button>
           {error && <p className="message error">{error}</p>}
         </form>
       </section>

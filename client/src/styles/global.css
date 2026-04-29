@@ -2785,6 +2785,41 @@ textarea {
   line-height: 1.6;
 }
 
+.event-highlight {
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.event-highlight__media {
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 220px;
+  box-shadow: 0 10px 20px rgba(90, 56, 30, 0.14);
+}
+
+.event-highlight__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-highlight__content {
+  display: grid;
+  align-content: center;
+  gap: 0.55rem;
+}
+
+.event-highlight__content h2,
+.event-highlight__content p {
+  margin: 0;
+}
+
+.event-highlight__content p {
+  color: rgba(90, 56, 30, 0.78);
+  line-height: 1.6;
+}
+
 .table-card {
   overflow-x: auto;
 }
@@ -3543,7 +3578,8 @@ td {
   .admin-gallery-grid,
   .stats-grid,
   .about-hero,
-  .about-grid {
+  .about-grid,
+  .event-highlight {
     grid-template-columns: 1fr;
   }
 
