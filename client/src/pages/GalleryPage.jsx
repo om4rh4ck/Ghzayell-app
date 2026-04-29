@@ -29,6 +29,7 @@ function GalleryPage() {
             Ghzaielle celebre une grande reussite: distinction recue lors de l'evenement Torchi Awards pour la
             meilleure brik a Djerba.
           </p>
+          <p>Date: 2025.</p>
         </div>
       </section>
       <section className="card event-highlight">

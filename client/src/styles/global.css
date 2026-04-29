@@ -184,6 +184,33 @@ textarea {
   line-height: 1;
 }
 
+.brand__title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.brand__page-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255, 251, 244, 0.95), rgba(242, 226, 198, 0.8));
+  color: var(--brown-900);
+  box-shadow: 0 6px 14px rgba(90, 56, 30, 0.1);
+}
+
+.brand__page-icon svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .brand small {
   display: block;
   margin-top: 0.14rem;

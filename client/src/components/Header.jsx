@@ -2,6 +2,21 @@ import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
+const HomeIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M4.9 11.2 12 5.6l7.1 5.6" />
+    <path d="M7.1 10.9v7.3h9.8v-7.3" />
+    <path d="M10.6 18.2v-4h2.8v4" />
+  </svg>
+);
+
+const SearchIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="10.5" cy="10.5" r="4.8" />
+    <path d="M14.1 14.1 18.3 18.3" />
+  </svg>
+);
+
 const MenuIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M4 7h16" />
@@ -56,6 +71,21 @@ const AboutIcon = () => (
   </svg>
 );
 
+const CartIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6 7h13l-1.3 6.2a1.5 1.5 0 0 1-1.5 1.2H9a1.5 1.5 0 0 1-1.5-1.2L6 5.5H3.5" />
+    <path d="M9 19a1.1 1.1 0 1 0 0 2.2A1.1 1.1 0 0 0 9 19Zm7 0a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2Z" />
+  </svg>
+);
+
+const AuthIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M10.2 5.2H7.4a1.9 1.9 0 0 0-1.9 1.9v9.8a1.9 1.9 0 0 0 1.9 1.9h2.8" />
+    <path d="m13 8.6 4.2 3.4-4.2 3.4" />
+    <path d="M10.4 12h6.8" />
+  </svg>
+);
+
 function Header() {
   const { user } = useAuth();
   const location = useLocation();
@@ -71,20 +101,22 @@ function Header() {
   ];
 
   const pageMeta = {
-    "/": { title: "Accueil", subtitle: "Le meilleur Brik de Tunisie" },
-    "/menu": { title: "Menu", subtitle: "Savourez le numero un de Tunisie" },
-    "/about": { title: "A propos", subtitle: "Decouvrez l'histoire de Ghzaielle Food" },
-    "/gallery": { title: "Evenements", subtitle: "Reussites et moments forts de Ghzaielle" },
-    "/points": { title: "Points", subtitle: "Gagnez des points a chaque commande" },
-    "/orders": { title: "Commandes", subtitle: "Suivez vos commandes en direct" },
-    "/cart": { title: "Panier", subtitle: "Finalisez votre commande" },
-    "/auth": { title: "Connexion", subtitle: "Entrez dans l'univers Ghzaiel" },
-    "/dashboard": { title: "Mon espace", subtitle: "Retrouvez vos commandes et vos avantages" }
+    "/": { title: "Accueil", subtitle: "Le meilleur Brik de Tunisie", icon: HomeIcon },
+    "/search": { title: "Recherche", subtitle: "Trouvez rapidement vos produits", icon: SearchIcon },
+    "/menu": { title: "Menu", subtitle: "Savourez le numero un de Tunisie", icon: MenuCardIcon },
+    "/about": { title: "A propos", subtitle: "Decouvrez l'histoire de Ghzaielle Food", icon: AboutIcon },
+    "/gallery": { title: "Evenements", subtitle: "Reussites et moments forts de Ghzaielle", icon: GalleryIcon },
+    "/points": { title: "Points", subtitle: "Gagnez des points a chaque commande", icon: PointsIcon },
+    "/orders": { title: "Commandes", subtitle: "Suivez vos commandes en direct", icon: OrdersIcon },
+    "/cart": { title: "Panier", subtitle: "Finalisez votre commande", icon: CartIcon },
+    "/auth": { title: "Connexion", subtitle: "Entrez dans l'univers Ghzaiel", icon: AuthIcon },
+    "/dashboard": { title: "Mon espace", subtitle: "Retrouvez vos commandes et vos avantages", icon: ProfileIcon }
   };
 
   const current = pageMeta[location.pathname] || {
     title: "Ghzaiel Food",
-    subtitle: "Cuisine tunisienne moderne"
+    subtitle: "Cuisine tunisienne moderne",
+    icon: HomeIcon
   };
 
   useEffect(() => {
@@ -99,7 +131,12 @@ function Header() {
             <img src="/assets/ghzaiel-logo-clean.png" alt="Ghzaiel Food logo" className="brand__logo" />
           </div>
           <div>
-            <strong>{current.title}</strong>
+            <div className="brand__title-row">
+              <span className="brand__page-icon" aria-hidden="true">
+                <current.icon />
+              </span>
+              <strong>{current.title}</strong>
+            </div>
             <small>{current.subtitle}</small>
           </div>
         </Link>
