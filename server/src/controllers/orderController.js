@@ -23,6 +23,13 @@ export const createOrder = async (req, res) => {
 
   const db = getDb();
   const productIds = items.map((item) => Number(item.product));
+
+  if (productIds.some((productId) => !Number.isInteger(productId) || productId <= 0)) {
+    return res.status(400).json({
+      message: "Un ou plusieurs produits du panier sont invalides. Veuillez vider le panier et reessayer."
+    });
+  }
+
   const [products] = await db.query(
     `SELECT * FROM products WHERE id IN (${productIds.map(() => "?").join(",")})`,
     productIds
@@ -42,7 +49,7 @@ export const createOrder = async (req, res) => {
       productId: product.id,
       name: product.name,
       price: unitPrice,
-      quantity: Number(item.quantity),
+      quantity: Math.max(Number(item.quantity) || 1, 1),
       image: product.image
     };
   });
