@@ -6,6 +6,27 @@ import { localMenuCategories } from "../data/localMenu.js";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 
+function CategoryIcon({ category }) {
+  const normalized = String(category || "").toLowerCase();
+  const icon = normalized.includes("boisson")
+    ? "🥤"
+    : normalized.includes("brik")
+      ? "🥟"
+      : normalized.includes("plat")
+        ? "🍽️"
+        : normalized.includes("ojja")
+          ? "🍳"
+          : normalized.includes("supplement")
+            ? "➕"
+            : normalized.includes("sandwich")
+              ? "🥖"
+              : normalized.includes("huitieme")
+                ? "🧾"
+                : "🍴";
+
+  return <span className="menu-category-filter__icon" aria-hidden="true">{icon}</span>;
+}
+
 function MenuPage() {
   const { addToCart } = useCart();
   const { user } = useAuth();
@@ -67,7 +88,8 @@ function MenuPage() {
               className={selectedCategory === category ? "is-active" : ""}
               onClick={() => setSelectedCategory(category)}
             >
-              {category}
+              <CategoryIcon category={category} />
+              <span>{category}</span>
             </button>
           ))}
         </div>

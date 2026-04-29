@@ -45,6 +45,11 @@ function AdminOrdersPage() {
     }
   };
 
+  const pendingCount = orders.filter((order) => order.status === "pending").length;
+  const activeCount = orders.filter((order) => ["confirmed", "preparing"].includes(order.status)).length;
+  const deliveredCount = orders.filter((order) => order.status === "delivered").length;
+  const totalRevenue = orders.reduce((sum, order) => sum + Number(order.total || 0), 0);
+
   return (
     <div className="stack">
       <section className="section-heading">
@@ -53,6 +58,24 @@ function AdminOrdersPage() {
           <h1>Gestion des commandes</h1>
           <p>Suivez les commandes en temps reel et mettez a jour chaque statut.</p>
         </div>
+      </section>
+      <section className="admin-orders-kpi-grid">
+        <article className="admin-orders-kpi-card">
+          <span>En attente</span>
+          <strong>{pendingCount}</strong>
+        </article>
+        <article className="admin-orders-kpi-card">
+          <span>En cours</span>
+          <strong>{activeCount}</strong>
+        </article>
+        <article className="admin-orders-kpi-card">
+          <span>Livrees</span>
+          <strong>{deliveredCount}</strong>
+        </article>
+        <article className="admin-orders-kpi-card">
+          <span>Revenu total</span>
+          <strong>{totalRevenue.toFixed(2)} DT</strong>
+        </article>
       </section>
       {message && <p className="message success">{message}</p>}
       {error && <p className="message error">{error}</p>}
@@ -124,7 +147,7 @@ function AdminOrdersPage() {
             <div className="admin-order-items">
               {order.items.map((item) => (
                 <div key={item._id} className="admin-order-item">
-                  <img src={getMediaUrl(item.image)} alt={item.name} />
+                  {getMediaUrl(item.image) ? <img src={getMediaUrl(item.image)} alt={item.name} /> : <div className="admin-order-item__image-placeholder" aria-hidden="true" />}
                   <div>
                     <strong>{item.name}</strong>
                     <p>Quantite : {item.quantity}</p>

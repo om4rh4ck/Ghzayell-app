@@ -204,7 +204,11 @@ function CartPage() {
           <div className="stack">
             {items.map((item) => (
               <div key={item.product} className="cart-item cart-item--ecommerce">
-                <img src={getMediaUrl(item.image)} alt={item.name} />
+                {getMediaUrl(item.image) ? (
+                  <img src={getMediaUrl(item.image)} alt={item.name} />
+                ) : (
+                  <div className="cart-item__image-placeholder" aria-hidden="true" />
+                )}
                 <div className="cart-item__details">
                   <h3>{item.name}</h3>
                   <p>{item.price.toFixed(2)} DT</p>

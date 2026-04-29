@@ -633,10 +633,15 @@ textarea {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  padding: 0.65rem 0.95rem;
+  min-height: 44px;
+  padding: 0.65rem 1.05rem;
   background: var(--gold-gradient);
-  color: #fff;
-  box-shadow: 0 8px 16px rgba(125, 82, 27, 0.18);
+  color: #fffdf8;
+  font-weight: 800;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 232, 0.55),
+    0 10px 18px rgba(125, 82, 27, 0.22);
+  border: 1px solid rgba(184, 121, 23, 0.35);
 }
 
 .button-primary:hover,
@@ -1273,7 +1278,7 @@ textarea {
   display: flex;
   gap: 0.55rem;
   overflow-x: auto;
-  padding-bottom: 0.15rem;
+  padding: 0.3rem 0.1rem 0.2rem;
 }
 
 .menu-category-filter::-webkit-scrollbar {
@@ -1282,19 +1287,40 @@ textarea {
 
 .menu-category-filter button {
   flex: 0 0 auto;
-  padding: 0.78rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 46px;
+  padding: 0.72rem 0.95rem;
   border: 1px solid rgba(119, 76, 41, 0.14);
   border-radius: 999px;
   background: rgba(255, 248, 239, 0.84);
   color: var(--brown-800);
   white-space: nowrap;
   font-weight: 700;
-  box-shadow: 0 6px 18px rgba(93, 55, 25, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 8px 16px rgba(93, 55, 25, 0.1);
+}
+
+.menu-category-filter__icon {
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(90, 56, 30, 0.08);
+  font-size: 0.8rem;
 }
 
 .menu-category-filter .is-active {
   background: linear-gradient(180deg, rgba(106, 64, 33, 0.96), rgba(80, 48, 25, 0.98));
   color: #fff7ea;
+  border-color: rgba(255, 244, 221, 0.3);
+}
+
+.menu-category-filter .is-active .menu-category-filter__icon {
+  background: rgba(255, 248, 236, 0.22);
 }
 
 .menu-local-board {
@@ -1703,9 +1729,23 @@ textarea {
   gap: 0.9rem;
   padding: 1rem;
   border-radius: 24px;
+  border: 1px solid rgba(90, 56, 30, 0.08);
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.88), rgba(246, 234, 216, 0.5));
 }
 
 .cart-item--ecommerce img {
+  width: 82px;
+  height: 82px;
+}
+
+.cart-item__image-placeholder,
+.admin-order-item__image-placeholder {
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(238, 219, 191, 0.75), rgba(220, 192, 152, 0.45));
+  border: 1px dashed rgba(130, 85, 34, 0.35);
+}
+
+.cart-item__image-placeholder {
   width: 82px;
   height: 82px;
 }
@@ -1776,7 +1816,7 @@ textarea {
 
 .checkout-form {
   display: grid;
-  gap: 0.95rem;
+  gap: 1rem;
 }
 
 .checkout-mode-selector {
@@ -1867,6 +1907,11 @@ textarea {
 
 .checkout-actions {
   display: flex;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding-top: 0.45rem;
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0), rgba(255, 252, 247, 0.96) 36%);
 }
 
 .checkout-submit {
@@ -2478,7 +2523,9 @@ textarea {
 }
 
 .admin-order-card {
-  gap: 0.7rem;
+  gap: 0.9rem;
+  border: 1px solid rgba(90, 56, 30, 0.08);
+  background: linear-gradient(180deg, rgba(255, 250, 244, 0.9), rgba(246, 234, 216, 0.68));
 }
 
 .admin-order-card__top {
@@ -2566,6 +2613,7 @@ textarea {
 .admin-order-items {
   display: grid;
   gap: 0.65rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .admin-order-item {
@@ -2585,6 +2633,11 @@ textarea {
   border-radius: 16px;
 }
 
+.admin-order-item__image-placeholder {
+  width: 64px;
+  height: 64px;
+}
+
 .admin-order-item strong,
 .admin-order-item p {
   margin: 0;
@@ -2594,7 +2647,39 @@ textarea {
   margin-top: 0.15rem;
 }
 
+.admin-orders-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.admin-orders-kpi-card {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.95rem 1rem;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.9), rgba(246, 234, 216, 0.72));
+  box-shadow: 0 8px 16px rgba(90, 56, 30, 0.08);
+  border: 1px solid rgba(90, 56, 30, 0.1);
+}
+
+.admin-orders-kpi-card span {
+  color: rgba(90, 56, 30, 0.68);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.admin-orders-kpi-card strong {
+  color: var(--brown-900);
+  font-size: 1.18rem;
+}
+
 @media (max-width: 640px) {
+  .admin-orders-kpi-grid,
+  .admin-order-items {
+    grid-template-columns: 1fr;
+  }
+
   .admin-order-card__top {
     display: grid;
   }
