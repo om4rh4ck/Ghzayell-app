@@ -21,13 +21,13 @@ function GalleryPage() {
       </section>
       <section className="card event-highlight">
         <div className="event-highlight__media">
-          <img src="/assets/evetorchi.png" alt="Torchi Awards - meilleure brik a Djerba" />
+          <img src="/assets/evetorchi.png" alt="Torchi Food Awards - meilleure brik a Tunis" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Awards - Meilleure Brik a Djerba</h2>
+          <h2>Torchi Food Awards - Meilleure Brik a Tunis</h2>
           <p>
             Ghzaielle celebre une grande reussite: distinction recue lors de l'evenement Torchi Awards pour la
-            meilleure brik a Djerba.
+            meilleure brik a Tunis.
           </p>
           <p>Date: 2025.</p>
         </div>
@@ -37,12 +37,38 @@ function GalleryPage() {
           <img src="/assets/torchi2024.png" alt="Evenement Torchi Awards 2024" />
         </div>
         <div className="event-highlight__content">
-          <h2>Evenement Torchi Awards 2024</h2>
+          <h2>Torchi Food Awards 2024</h2>
           <p>
-            Ghzaielle gagne la meilleure brik a Djerba lors de l'evenement Torchi Awards 2024, une distinction qui
+            Ghzaielle gagne la meilleure brik a Tunis lors de l'evenement Torchi Awards 2024, une distinction qui
             confirme notre savoir-faire artisanal.
           </p>
           <p>Premiere participation officielle aux evenements: 2025.</p>
+        </div>
+      </section>
+      <section className="card event-highlight">
+        <div className="event-highlight__media">
+          <img src="/assets/torchi2021.png" alt="Evenement Torchi 2021 - meilleur plat tunisien a Tunis" />
+        </div>
+        <div className="event-highlight__content">
+          <h2>Torchi Food Awards 2021 - Meilleur plat tunisien a Tunis</h2>
+          <p>
+            Ghzaielle remporte une distinction importante a Tunis en 2021 lors de l'evenement Torchi, avec le prix du
+            meilleur plat tunisien.
+          </p>
+          <p>Date: 2021.</p>
+        </div>
+      </section>
+      <section className="card event-highlight">
+        <div className="event-highlight__media">
+          <img src="/assets/brik2021.png" alt="Torchi Food Awards 2021 - meilleure brik en Tunisie" />
+        </div>
+        <div className="event-highlight__content">
+          <h2>Torchi Food Awards 2021 - Meilleure Brik en Tunisie</h2>
+          <p>
+            Ghzaielle gagne la meilleure brik en Tunisie lors de l'evenement Torchi Food Awards 2021, confirmant
+            l'excellence et l'authenticite de son savoir-faire.
+          </p>
+          <p>Date: 2021.</p>
         </div>
       </section>
       {error && <p className="message error">{error}</p>}
