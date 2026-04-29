@@ -3154,6 +3154,15 @@ textarea {
   background: linear-gradient(135deg, #c99d3e, #b67a1d);
 }
 
+.live-notice-stack {
+  position: sticky;
+  top: 0.35rem;
+  z-index: 45;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.2rem 0.9rem 0.55rem;
+}
+
 .orders-list {
   display: grid;
   gap: 1rem;

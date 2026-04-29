@@ -140,7 +140,10 @@ export const updateOrderStatus = async (req, res) => {
 
     await connection.query("UPDATE orders SET status = ? WHERE id = ?", [nextStatus, req.params.id]);
 
-    if (nextStatus === "delivered" && Number(orderRow.points_earned || 0) < POINTS_REWARDED_ON_APPROVAL) {
+    if (
+      (nextStatus === "confirmed" || nextStatus === "delivered") &&
+      Number(orderRow.points_earned || 0) < POINTS_REWARDED_ON_APPROVAL
+    ) {
       const bonusPoints = POINTS_REWARDED_ON_APPROVAL - Number(orderRow.points_earned || 0);
       await connection.query("UPDATE users SET points = points + ? WHERE id = ?", [bonusPoints, orderRow.user_id]);
       await connection.query("UPDATE orders SET points_earned = ? WHERE id = ?", [POINTS_REWARDED_ON_APPROVAL, req.params.id]);
@@ -158,7 +161,7 @@ export const updateOrderStatus = async (req, res) => {
   const order = orders.find((entry) => entry.id === String(req.params.id));
   const statusMessage =
     nextStatus === "confirmed"
-      ? `Commande confirmee: le client peut gagner ${POINTS_PREVIEW_ON_CONFIRM} points.`
+      ? `Commande confirmee: ${POINTS_REWARDED_ON_APPROVAL} points credites au client.`
       : nextStatus === "delivered"
         ? `Commande approuvee: ${POINTS_REWARDED_ON_APPROVAL} points credites au client.`
         : "Statut mis a jour.";

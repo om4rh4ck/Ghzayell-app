@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header.jsx";
+import ClientLiveNotice from "../components/ClientLiveNotice.jsx";
 import Footer from "../components/Footer.jsx";
 
 function MainLayout() {
@@ -9,6 +10,7 @@ function MainLayout() {
         <div className="phone-shell">
           <div className="web-app-frame">
             <Header />
+            <ClientLiveNotice />
             <main className="page-shell">
               <Outlet />
             </main>

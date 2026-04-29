@@ -63,7 +63,7 @@ function OrdersPage() {
                     key={noticeKey}
                     variant="info"
                     title={`Commande #${order._id.slice(-6)} confirmee`}
-                    message="Des que l'equipe Ghzaielle confirme votre ordre, vous pouvez gagner 10 points."
+                    message="Commande confirmee: vous avez gagne 15 points."
                     onClose={() => setDismissedNotices((current) => ({ ...current, [noticeKey]: true }))}
                   />
                 );
