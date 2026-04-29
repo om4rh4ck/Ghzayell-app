@@ -6,26 +6,6 @@ import { localMenuCategories } from "../data/localMenu.js";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 
-const onlineCategories = ["TOUS", "BRIKA", "S7AN", "3EJJA", "LABLEBI", "HAJA TETCHRAB"];
-
-function detectOnlineCategory(product) {
-  const text = `${product.name ?? ""} ${product.description ?? ""} ${product.category ?? ""}`.toLowerCase();
-
-  if (text.includes("boisson") || text.includes("drink") || text.includes("jus") || text.includes("citron")) {
-    return "HAJA TETCHRAB";
-  }
-  if (text.includes("lablebi")) {
-    return "LABLEBI";
-  }
-  if (text.includes("ojja") || text.includes("3ejja")) {
-    return "3EJJA";
-  }
-  if (text.includes("plat") || text.includes("menu") || text.includes("s7an") || text.includes("pack")) {
-    return "S7AN";
-  }
-  return "BRIKA";
-}
-
 function MenuPage() {
   const { addToCart } = useCart();
   const { user } = useAuth();
@@ -62,10 +42,11 @@ function MenuPage() {
     navigate("/cart");
   };
 
-  const normalizedOnlineProducts = products.map((product) => ({
-    ...product,
-    category: detectOnlineCategory(product)
-  }));
+  const normalizedOnlineProducts = products;
+  const onlineCategories = [
+    "TOUS",
+    ...Array.from(new Set(products.map((product) => String(product.category || "").trim()).filter(Boolean)))
+  ];
   const filteredOnlineProducts =
     selectedCategory === "TOUS"
       ? normalizedOnlineProducts
