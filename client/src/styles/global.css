@@ -2730,6 +2730,61 @@ textarea {
   margin: 0;
 }
 
+.about-page {
+  gap: 1rem;
+}
+
+.about-hero {
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.about-hero__media {
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 220px;
+  box-shadow: 0 10px 20px rgba(90, 56, 30, 0.12);
+}
+
+.about-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-hero__content {
+  display: grid;
+  align-content: center;
+  gap: 0.6rem;
+}
+
+.about-hero__content h1,
+.about-hero__content p {
+  margin: 0;
+}
+
+.about-hero__content p {
+  color: rgba(90, 56, 30, 0.78);
+  line-height: 1.6;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-card h2,
+.about-card p {
+  margin: 0;
+}
+
+.about-card p {
+  margin-top: 0.5rem;
+  color: rgba(90, 56, 30, 0.78);
+  line-height: 1.6;
+}
+
 .table-card {
   overflow-x: auto;
 }
@@ -3486,7 +3541,9 @@ td {
   .admin-product-grid,
   .admin-user-card__stats,
   .admin-gallery-grid,
-  .stats-grid {
+  .stats-grid,
+  .about-hero,
+  .about-grid {
     grid-template-columns: 1fr;
   }
 

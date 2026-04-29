@@ -47,12 +47,22 @@ const PointsIcon = () => (
   </svg>
 );
 
+const AboutIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="7.5" r="2.2" />
+    <path d="M12 11.8v5.7" />
+    <path d="M8.2 18.2h7.6" />
+    <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
+  </svg>
+);
+
 function Header() {
   const { user } = useAuth();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const profilePath = user ? (user.role === "admin" ? "/admin" : "/dashboard") : "/auth";
   const appLinks = [
+    { to: "/about", label: "A propos", icon: AboutIcon },
     { to: "/gallery", label: "Galerie", icon: GalleryIcon },
     { to: "/orders", label: "Commandes", icon: OrdersIcon },
     { to: "/menu", label: "Menu", icon: MenuCardIcon },
@@ -63,6 +73,7 @@ function Header() {
   const pageMeta = {
     "/": { title: "Accueil", subtitle: "Le meilleur Brik de Tunisie" },
     "/menu": { title: "Menu", subtitle: "Savourez le numero un de Tunisie" },
+    "/about": { title: "A propos", subtitle: "Decouvrez l'histoire de Ghzaielle Food" },
     "/gallery": { title: "Galerie", subtitle: "Images et videos delicieuses" },
     "/points": { title: "Points", subtitle: "Gagnez des points a chaque commande" },
     "/orders": { title: "Commandes", subtitle: "Suivez vos commandes en direct" },

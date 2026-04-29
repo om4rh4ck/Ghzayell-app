@@ -10,6 +10,7 @@ import PointsPage from "./pages/PointsPage.jsx";
 import GalleryPage from "./pages/GalleryPage.jsx";
 import OrdersPage from "./pages/OrdersPage.jsx";
 import AuthPage from "./pages/AuthPage.jsx";
+import AboutPage from "./pages/AboutPage.jsx";
 import CustomerDashboardPage from "./pages/CustomerDashboardPage.jsx";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage.jsx";
 import AdminMenuPage from "./pages/admin/AdminMenuPage.jsx";
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/menu" element={<MenuPage />} />
+        <Route path="/about" element={<AboutPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route
