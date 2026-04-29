@@ -24,7 +24,7 @@ function GalleryPage() {
           <img src="/assets/evetorchi.png" alt="Torchi Food Awards - meilleure brik a Tunis" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards - Meilleure Brik a Tunis</h2>
+          <h2>Torchi Food Awards 2025, Meilleure Brik en Tunisie</h2>
           <p>
             Ghzaielle celebre une grande reussite: distinction recue lors de l'evenement Torchi Awards pour la
             meilleure brik a Tunis.
@@ -37,7 +37,7 @@ function GalleryPage() {
           <img src="/assets/torchi2024.png" alt="Evenement Torchi Awards 2024" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2024</h2>
+          <h2>Torchi Food Awards 2024, Meilleure Brik en Tunisie</h2>
           <p>
             Ghzaielle gagne la meilleure brik a Tunis lors de l'evenement Torchi Awards 2024, une distinction qui
             confirme notre savoir-faire artisanal.
@@ -50,7 +50,7 @@ function GalleryPage() {
           <img src="/assets/torchi2021.png" alt="Evenement Torchi 2021 - meilleur plat tunisien a Tunis" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2021 - Meilleur plat tunisien a Tunis</h2>
+          <h2>Torchi Food Awards 2021, Meilleure Plat Tunisien en Tunisie</h2>
           <p>
             Ghzaielle remporte une distinction importante a Tunis en 2021 lors de l'evenement Torchi, avec le prix du
             meilleur plat tunisien.
@@ -63,7 +63,7 @@ function GalleryPage() {
           <img src="/assets/brik2021.png" alt="Torchi Food Awards 2021 - meilleure brik en Tunisie" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2021 - Meilleure Brik en Tunisie</h2>
+          <h2>Torchi Food Awards 2021, Meilleure Brik en Tunisie</h2>
           <p>
             Ghzaielle gagne la meilleure brik en Tunisie lors de l'evenement Torchi Food Awards 2021, confirmant
             l'excellence et l'authenticite de son savoir-faire.
