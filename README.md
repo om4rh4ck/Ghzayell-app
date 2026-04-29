@@ -125,20 +125,20 @@ This project is now ready to run with one Node.js app in production:
 2. Create a MySQL database in Hostinger
 3. Create a Node.js app in Hostinger or deploy on a Hostinger VPS
 4. Connect the app to this GitHub repository
-5. Use these commands:
+5. Use the repository root as the application root
+6. Use these commands:
 
 Build command:
 
 ```bash
-npm install --prefix server
-npm install --prefix client
-npm run build --prefix client
+npm install
+npm run hostinger:build
 ```
 
 Start command:
 
 ```bash
-npm run start --prefix server
+npm start
 ```
 
 ### Required environment variables on Hostinger
