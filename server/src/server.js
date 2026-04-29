@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import app from "./app.js";
 import { connectDb } from "./config/db.js";
+import { ensureDefaultAdmin } from "./services/bootstrapService.js";
 import { fileURLToPath } from "url";
 
 dotenv.config();
@@ -9,6 +10,7 @@ const port = process.env.PORT || 5000;
 
 export const startServer = async () => {
   await connectDb();
+  await ensureDefaultAdmin();
   const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
   });
