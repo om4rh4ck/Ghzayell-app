@@ -29,7 +29,7 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute customerOnly>
               <CustomerDashboardPage />
             </ProtectedRoute>
           }
@@ -37,7 +37,7 @@ function App() {
         <Route
           path="/cart"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute customerOnly>
               <CartPage />
             </ProtectedRoute>
           }
@@ -45,7 +45,7 @@ function App() {
         <Route
           path="/points"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute customerOnly>
               <PointsPage />
             </ProtectedRoute>
           }
@@ -53,7 +53,7 @@ function App() {
         <Route
           path="/orders"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute customerOnly>
               <OrdersPage />
             </ProtectedRoute>
           }

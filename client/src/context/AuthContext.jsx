@@ -5,6 +5,7 @@ export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [auth, setAuth] = useState(() => JSON.parse(localStorage.getItem("ghzaiel-auth") || "null"));
+  const [isReady, setIsReady] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -14,6 +15,33 @@ export function AuthProvider({ children }) {
       localStorage.removeItem("ghzaiel-auth");
     }
   }, [auth]);
+
+  useEffect(() => {
+    const syncSession = async () => {
+      if (!auth?.token) {
+        setIsReady(true);
+        return;
+      }
+
+      try {
+        const profile = await apiRequest("/auth/me");
+        setAuth((current) =>
+          current
+            ? {
+                ...current,
+                user: profile
+              }
+            : current
+        );
+      } catch {
+        setAuth(null);
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    syncSession();
+  }, []);
 
   const submitAuth = async (endpoint, payload) => {
     setLoading(true);
@@ -47,13 +75,14 @@ export function AuthProvider({ children }) {
       auth,
       user: auth?.user || null,
       token: auth?.token || null,
+      isReady,
       loading,
       login: (payload) => submitAuth("/auth/login", payload),
       register: (payload) => submitAuth("/auth/register", payload),
       logout: () => setAuth(null),
       refreshProfile
     }),
-    [auth, loading]
+    [auth, isReady, loading]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

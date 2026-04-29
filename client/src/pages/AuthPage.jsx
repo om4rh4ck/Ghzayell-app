@@ -1,14 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 function AuthPage() {
-  const { login, register, loading } = useAuth();
+  const { login, register, loading, user, isReady } = useAuth();
   const [isRegister, setIsRegister] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    if (!isReady || !user) {
+      return;
+    }
+
+    navigate(user.role === "admin" ? "/admin" : "/dashboard", { replace: true });
+  }, [isReady, navigate, user]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

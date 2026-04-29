@@ -45,6 +45,12 @@ export const apiRequest = async (path, options = {}) => {
     if (response.status === 401) {
       handleUnauthorizedSession();
     }
+    if (response.status === 401) {
+      throw new Error("Votre session a expire. Merci de vous reconnecter.");
+    }
+    if (response.status === 403) {
+      throw new Error("Acces refuse pour ce compte.");
+    }
     throw new Error(data?.message || "Request failed");
   }
 
@@ -70,6 +76,12 @@ export const apiFormRequest = async (path, formData, method = "POST") => {
   if (!response.ok) {
     if (response.status === 401) {
       handleUnauthorizedSession();
+    }
+    if (response.status === 401) {
+      throw new Error("Votre session a expire. Merci de vous reconnecter.");
+    }
+    if (response.status === 403) {
+      throw new Error("Acces refuse pour ce compte.");
     }
     throw new Error(data?.message || "Request failed");
   }

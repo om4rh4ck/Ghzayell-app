@@ -24,6 +24,13 @@ const ContactPhoneIcon = () => (
   </svg>
 );
 
+const ContactLocationIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 20.4s-5.8-5.1-5.8-10.2a5.8 5.8 0 1 1 11.6 0c0 5.1-5.8 10.2-5.8 10.2Z" />
+    <path d="M12 12.4a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z" />
+  </svg>
+);
+
 const ContactMessageIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M6.5 6.2h11A1.3 1.3 0 0 1 18.8 7.5v7a1.3 1.3 0 0 1-1.3 1.3h-6.2l-3.6 2.9v-2.9H6.5a1.3 1.3 0 0 1-1.3-1.3v-7a1.3 1.3 0 0 1 1.3-1.3Z" />
@@ -37,9 +44,14 @@ function HomePage() {
   const [proMessage, setProMessage] = useState("");
   const [proError, setProError] = useState("");
   const orderEntryPath = user ? "/menu" : "/auth";
+  const publicSiteUrl =
+    (typeof window !== "undefined" && window.location.origin) ||
+    "https://orange-sparrow-230688.hostingersite.com";
   const menuQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
-    `${window.location.origin}/menu`
+    `${publicSiteUrl}/menu`
   )}`;
+  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent("Rue Med Ferjeni, Houmt Souk 4180")}&z=15&output=embed`;
+  const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Rue Med Ferjeni, Houmt Souk 4180")}`;
 
   const handleProSubmit = async (event) => {
     event.preventDefault();
@@ -222,6 +234,59 @@ function HomePage() {
             {proError ? <p className="message error">{proError}</p> : null}
             {proMessage ? <p className="promo-banner__success">{proMessage}</p> : null}
           </form>
+
+          <section className="promo-banner__contact-card">
+            <div className="promo-banner__contact-intro">
+              <strong>Coordonnees Ghzaiel</strong>
+              <p>Retrouvez notre adresse, notre contact direct et l'acces rapide a la localisation.</p>
+            </div>
+
+            <div className="promo-banner__contact-list">
+              <a
+                href={mapLinkUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="promo-banner__contact-item"
+              >
+                <span className="promo-banner__contact-icon">
+                  <ContactLocationIcon />
+                </span>
+                <span>
+                  <strong>Adresse</strong>
+                  <em>Rue Med Ferjeni, Houmt Souk 4180</em>
+                </span>
+              </a>
+
+              <a href="tel:+21625644212" className="promo-banner__contact-item">
+                <span className="promo-banner__contact-icon">
+                  <ContactPhoneIcon />
+                </span>
+                <span>
+                  <strong>Numero</strong>
+                  <em>25 644 212</em>
+                </span>
+              </a>
+
+              <a href="mailto:contact@ghzaielfood.com" className="promo-banner__contact-item">
+                <span className="promo-banner__contact-icon">
+                  <ContactMailIcon />
+                </span>
+                <span>
+                  <strong>Email</strong>
+                  <em>contact@ghzaielfood.com</em>
+                </span>
+              </a>
+            </div>
+
+            <div className="promo-banner__map-wrap">
+              <iframe
+                title="Carte Ghzaiel Food"
+                src={mapEmbedUrl}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </section>
         </section>
       </section>
     </div>
