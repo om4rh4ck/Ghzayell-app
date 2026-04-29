@@ -10,7 +10,6 @@ const initialForm = {
   description: "",
   price: "",
   category: "Sandwich",
-  image: "",
   promoActive: false,
   promoLabel: "",
   promoPrice: ""
@@ -84,28 +83,17 @@ function AdminMenuPage() {
     setSuccessMessage("");
 
     try {
-      if (file) {
-        const formData = new FormData();
-        Object.entries(form)
-          .filter(([key]) => key !== "_id")
-          .forEach(([key, value]) => formData.append(key, value));
-        formData.append("image", file);
-        await apiFormRequest("/products", formData, "POST");
-      } else {
-        await apiRequest("/products", {
-          method: "POST",
-          body: JSON.stringify({
-            name: form.name,
-            description: form.description,
-            price: Number(form.price),
-            category: form.category,
-            image: form.image,
-            promoActive: form.promoActive,
-            promoLabel: form.promoLabel,
-            promoPrice: form.promoPrice === "" ? null : Number(form.promoPrice)
-          })
-        });
+      if (!file) {
+        setError("Image obligatoire: veuillez choisir une image.");
+        return;
       }
+
+      const formData = new FormData();
+      Object.entries(form)
+        .filter(([key]) => key !== "_id")
+        .forEach(([key, value]) => formData.append(key, value));
+      formData.append("image", file);
+      await apiFormRequest("/products", formData, "POST");
 
       setForm(initialForm);
       setCategorySelection("Sandwich");
@@ -146,7 +134,6 @@ function AdminMenuPage() {
       description: product.description,
       price: product.price,
       category: product.category,
-      image: product.image || "",
       promoActive: Boolean(product.promoActive),
       promoLabel: product.promoLabel || "",
       promoPrice: product.promoPrice ?? ""
@@ -186,7 +173,6 @@ function AdminMenuPage() {
             description: editForm.description,
             price: Number(editForm.price),
             category: editForm.category,
-            image: editForm.image,
             promoActive: editForm.promoActive,
             promoLabel: editForm.promoLabel,
             promoPrice: editForm.promoPrice === "" ? null : Number(editForm.promoPrice)
@@ -256,11 +242,6 @@ function AdminMenuPage() {
             onChange={(event) => setForm((current) => ({ ...current, price: event.target.value }))}
             required
           />
-          <input
-            placeholder="URL de l'image"
-            value={form.image}
-            onChange={(event) => setForm((current) => ({ ...current, image: event.target.value }))}
-          />
           <label className="checkbox-row">
             <input
               type="checkbox"
@@ -281,7 +262,7 @@ function AdminMenuPage() {
             value={form.promoPrice}
             onChange={(event) => setForm((current) => ({ ...current, promoPrice: event.target.value }))}
           />
-          <input type="file" accept="image/*" onChange={(event) => setFile(event.target.files?.[0] || null)} />
+          <input type="file" accept="image/*" onChange={(event) => setFile(event.target.files?.[0] || null)} required />
           <textarea
             placeholder="Description"
             value={form.description}
@@ -369,11 +350,6 @@ function AdminMenuPage() {
                 value={editForm.price}
                 onChange={(event) => setEditForm((current) => ({ ...current, price: event.target.value }))}
                 required
-              />
-              <input
-                placeholder="URL de l'image"
-                value={editForm.image}
-                onChange={(event) => setEditForm((current) => ({ ...current, image: event.target.value }))}
               />
               <label className="checkbox-row">
                 <input

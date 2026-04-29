@@ -5,7 +5,7 @@ const parseProductPayload = (req, current = {}) => ({
   name: req.body.name ?? current.name,
   description: req.body.description ?? current.description,
   price: req.body.price == null ? current.price : Number(req.body.price),
-  image: req.file ? `/uploads/${req.file.filename}` : req.body.image ?? current.image ?? "",
+  image: req.file ? `/uploads/${req.file.filename}` : current.image ?? "",
   category: req.body.category ?? current.category,
   featured:
     req.body.featured == null ? Boolean(current.featured) : req.body.featured === "true" || req.body.featured === true,
@@ -35,6 +35,10 @@ export const getProductCategories = async (req, res) => {
 };
 
 export const createProduct = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ message: "Image obligatoire: veuillez uploader une image." });
+  }
+
   const payload = parseProductPayload(req);
   const [result] = await getDb().query(
     `
