@@ -45,6 +45,20 @@ function AdminOrdersPage() {
     }
   };
 
+  const handleDeleteOrder = async (id) => {
+    setError("");
+    setMessage("");
+    try {
+      await apiRequest(`/orders/${id}`, { method: "DELETE" });
+      await loadOrders();
+      setMessage("Commande supprimee avec succes.");
+    } catch (err) {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    }
+  };
+
   const pendingCount = orders.filter((order) => order.status === "pending").length;
   const activeCount = orders.filter((order) => ["confirmed", "preparing"].includes(order.status)).length;
   const deliveredCount = orders.filter((order) => order.status === "delivered").length;
@@ -168,6 +182,9 @@ function AdminOrdersPage() {
               ))}
             </select>
           </label>
+          <button type="button" className="button-secondary button-secondary--danger" onClick={() => handleDeleteOrder(order._id)}>
+            Supprimer la commande
+          </button>
         </article>
       ))}
     </div>

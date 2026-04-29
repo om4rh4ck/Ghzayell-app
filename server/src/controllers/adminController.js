@@ -43,3 +43,24 @@ export const getContactMessages = async (req, res) => {
   const [rows] = await getDb().query("SELECT * FROM contact_messages ORDER BY created_at DESC");
   res.json(rows);
 };
+
+export const deleteUser = async (req, res) => {
+  const db = getDb();
+  const [rows] = await db.query("SELECT id, role FROM users WHERE id = ? LIMIT 1", [req.params.id]);
+  const user = rows[0];
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  if (String(user.id) === String(req.user.id)) {
+    return res.status(400).json({ message: "Vous ne pouvez pas supprimer votre propre compte." });
+  }
+
+  if (user.role === "admin") {
+    return res.status(400).json({ message: "Suppression des comptes admin non autorisee." });
+  }
+
+  await db.query("DELETE FROM users WHERE id = ?", [req.params.id]);
+  return res.json({ message: "Client supprime avec succes." });
+};

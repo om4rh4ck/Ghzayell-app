@@ -26,6 +26,7 @@ const fulfillmentLabels = {
 function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState("");
+  const [dismissedNotices, setDismissedNotices] = useState({});
 
   useEffect(() => {
     apiRequest("/orders/mine")
@@ -49,6 +50,40 @@ function OrdersPage() {
           message="Consultez vos statuts de commande, livraisons et points gagnes dans une vue unique."
         />
       ) : null}
+      {!error
+        ? orders
+            .slice(0, 3)
+            .map((order) => {
+              const noticeKey = `${order._id}-${order.status}`;
+              if (dismissedNotices[noticeKey]) return null;
+
+              if (order.status === "confirmed" || order.status === "preparing") {
+                return (
+                  <StatusNotice
+                    key={noticeKey}
+                    variant="info"
+                    title={`Commande #${order._id.slice(-6)} confirmee`}
+                    message="Des que l'equipe Ghzaielle confirme votre ordre, vous pouvez gagner 10 points."
+                    onClose={() => setDismissedNotices((current) => ({ ...current, [noticeKey]: true }))}
+                  />
+                );
+              }
+
+              if (order.status === "delivered" && Number(order.pointsEarned || 0) >= 15) {
+                return (
+                  <StatusNotice
+                    key={noticeKey}
+                    variant="reward"
+                    title={`Commande #${order._id.slice(-6)} approuvee`}
+                    message="Bravo, vous avez gagne 15 points sur cette commande."
+                    onClose={() => setDismissedNotices((current) => ({ ...current, [noticeKey]: true }))}
+                  />
+                );
+              }
+
+              return null;
+            })
+        : null}
       {!error && orders.length === 0 ? (
         <section className="card orders-empty-card">
           <h3>Aucune commande pour le moment</h3>

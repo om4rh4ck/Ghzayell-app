@@ -42,7 +42,7 @@ const variantConfig = {
   info: { icon: InfoIcon, className: "status-notice--info" }
 };
 
-function StatusNotice({ variant = "info", title, message }) {
+function StatusNotice({ variant = "info", title, message, onClose }) {
   const resolved = variantConfig[variant] || variantConfig.info;
   const Icon = resolved.icon;
 
@@ -55,6 +55,11 @@ function StatusNotice({ variant = "info", title, message }) {
         {title ? <strong>{title}</strong> : null}
         <p>{message}</p>
       </div>
+      {onClose ? (
+        <button type="button" className="status-notice__close" onClick={onClose} aria-label="Fermer la notification">
+          ×
+        </button>
+      ) : null}
     </article>
   );
 }

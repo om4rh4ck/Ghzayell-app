@@ -4,6 +4,7 @@ import { apiRequest } from "../../api/client";
 function AdminUsersPage() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [pointsByUser, setPointsByUser] = useState({});
 
   const loadUsers = async () => {
@@ -24,12 +25,28 @@ function AdminUsersPage() {
     if (!value) return;
 
     try {
+      setMessage("");
       await apiRequest(`/admin/users/${userId}/points`, {
         method: "PATCH",
         body: JSON.stringify({ points: value })
       });
       setPointsByUser((current) => ({ ...current, [userId]: "" }));
       await loadUsers();
+      setMessage("Points cadeaux ajoutes avec succes.");
+    } catch (err) {
+      if (!err?.silentRedirect) {
+        setError(err.message);
+      }
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      setError("");
+      setMessage("");
+      await apiRequest(`/admin/users/${userId}`, { method: "DELETE" });
+      await loadUsers();
+      setMessage("Client supprime avec succes.");
     } catch (err) {
       if (!err?.silentRedirect) {
         setError(err.message);
@@ -46,6 +63,7 @@ function AdminUsersPage() {
           <p>Consultez vos clients et offrez facilement des points cadeaux.</p>
         </div>
       </section>
+      {message && <p className="message success">{message}</p>}
       {error && <p className="message error">{error}</p>}
       <section className="admin-users-grid">
         {users.map((user) => (
@@ -85,6 +103,11 @@ function AdminUsersPage() {
               <button type="button" className="button-primary" onClick={() => handleAddPoints(user._id)}>
                 Ajouter les points
               </button>
+              {user.role !== "admin" ? (
+                <button type="button" className="button-secondary button-secondary--danger" onClick={() => handleDeleteUser(user._id)}>
+                  Supprimer ce client
+                </button>
+              ) : null}
             </div>
           </article>
         ))}

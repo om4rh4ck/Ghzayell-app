@@ -2,6 +2,7 @@ import express from "express";
 import { body } from "express-validator";
 import {
   createOrder,
+  deleteOrder,
   getAllOrders,
   getMyOrders,
   updateOrderStatus
@@ -41,5 +42,6 @@ router.patch(
   [body("status").isIn(["pending", "confirmed", "preparing", "delivered", "cancelled"]), validateRequest],
   asyncHandler(updateOrderStatus)
 );
+router.delete("/:id", protect, adminOnly, asyncHandler(deleteOrder));
 
 export default router;

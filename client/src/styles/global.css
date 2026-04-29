@@ -3065,6 +3065,7 @@ textarea {
   border-radius: 20px;
   border: 1px solid transparent;
   box-shadow: 0 10px 20px rgba(90, 56, 30, 0.08);
+  position: relative;
 }
 
 .status-notice__icon {
@@ -3100,6 +3101,21 @@ textarea {
 .status-notice__content p {
   color: rgba(90, 56, 30, 0.82);
   line-height: 1.45;
+}
+
+.status-notice__close {
+  position: absolute;
+  top: 0.45rem;
+  right: 0.5rem;
+  width: 30px;
+  height: 30px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(90, 56, 30, 0.08);
+  color: var(--brown-900);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .status-notice--success {
