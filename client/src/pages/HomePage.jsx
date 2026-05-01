@@ -4,7 +4,12 @@ import { apiRequest, getMediaUrl } from "../api/client";
 import { localMenuCategories } from "../data/localMenu.js";
 import { useAuth } from "../hooks/useAuth";
 import { useI18n } from "../hooks/useI18n.js";
-import { translateMenuCategory, translateMenuSubtitle } from "../utils/menuCategoryLabel.js";
+import {
+  translateMenuCategory,
+  translateMenuSubtitle,
+  translateMenuItem,
+  translateMenuItemDescription
+} from "../utils/menuCategoryLabel.js";
 
 const ContactUserIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -159,10 +164,10 @@ function HomePage() {
                 {category.items.map((item) => (
                   <article key={`${category.title}-${item.name}`} className="menu-local-item">
                     <div className="menu-local-item__head">
-                      <strong>{item.name}</strong>
+                      <strong>{translateMenuItem(language, item.name, item.name)}</strong>
                       <span>{item.price}</span>
                     </div>
-                    <p>{item.description}</p>
+                    <p>{translateMenuItemDescription(language, item.name, item.description)}</p>
                   </article>
                 ))}
               </div>
@@ -185,8 +190,8 @@ function HomePage() {
                 {mediaUrl ? <img src={mediaUrl} alt={product.name} /> : null}
                 <div className="featured-dish__content">
                   <div>
-                    <strong>{product.name}</strong>
-                    <small>{product.description}</small>
+                    <strong>{translateMenuItem(language, product.name, product.name)}</strong>
+                    <small>{translateMenuItemDescription(language, product.name, product.description)}</small>
                   </div>
                   <Link to={orderEntryPath} className="featured-dish__cta">
                     {t("common.order")}

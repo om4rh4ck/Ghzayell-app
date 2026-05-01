@@ -1,5 +1,6 @@
 import { getMediaUrl } from "../api/client";
 import { useI18n } from "../hooks/useI18n.js";
+import { translateMenuCategory, translateMenuItem, translateMenuItemDescription } from "../utils/menuCategoryLabel.js";
 
 const AddCartIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -11,17 +12,17 @@ const AddCartIcon = () => (
 );
 
 function ProductCard({ product, onAddToCart }) {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const displayPrice = product.effectivePrice ?? product.promoPrice ?? product.price;
   const mediaUrl = getMediaUrl(product.image);
 
   return (
     <article className="product-card product-card--mockup">
       <div className="product-card__copy">
-        <div className="pill pill--dark">{product.category}</div>
+        <div className="pill pill--dark">{translateMenuCategory(language, product.category) || product.category}</div>
         {product.promoActive && product.promoLabel ? <div className="pill pill--promo">{product.promoLabel}</div> : null}
-        <h3>{product.name}</h3>
-        <p>{product.description}</p>
+        <h3>{translateMenuItem(language, product.name, product.name)}</h3>
+        <p>{translateMenuItemDescription(language, product.name, product.description)}</p>
         <div className="product-card__footer">
           <div className="price-stack">
             {product.promoActive && product.promoPrice ? (
