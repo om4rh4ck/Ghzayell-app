@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard.jsx";
 import { localMenuCategories } from "../data/localMenu.js";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 function CategoryIcon({ category }) {
   const normalized = String(category || "").toLowerCase();
@@ -27,13 +28,16 @@ function CategoryIcon({ category }) {
   return <span className="menu-category-filter__icon" aria-hidden="true">{icon}</span>;
 }
 
+const ALL_CATEGORY = "__all__";
+
 function MenuPage() {
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("TOUS");
+  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
@@ -59,17 +63,17 @@ function MenuPage() {
     }
 
     addToCart(product);
-    setMessage(`${product.name} a ete ajoute au panier.`);
+    setMessage(t("menu.addedToCart", { name: product.name }));
     navigate("/cart");
   };
 
   const normalizedOnlineProducts = products;
   const onlineCategories = [
-    "TOUS",
+    ALL_CATEGORY,
     ...Array.from(new Set(products.map((product) => String(product.category || "").trim()).filter(Boolean)))
   ];
   const filteredOnlineProducts =
-    selectedCategory === "TOUS"
+    selectedCategory === ALL_CATEGORY
       ? normalizedOnlineProducts
       : normalizedOnlineProducts.filter((product) => product.category === selectedCategory);
 
@@ -77,10 +81,10 @@ function MenuPage() {
     <div className="stack">
       <section className="menu-section">
         <div className="menu-section__intro">
-          <h2>Menu en ligne</h2>
-          <p>Commandez vos favoris en ligne et ajoutez-les a votre panier.</p>
+          <h2>{t("menu.onlineTitle")}</h2>
+          <p>{t("menu.onlineDesc")}</p>
         </div>
-        <div className="menu-category-filter" role="tablist" aria-label="Categories du menu en ligne">
+        <div className="menu-category-filter" role="tablist" aria-label={t("menu.onlineTitle")}>
           {onlineCategories.map((category) => (
             <button
               key={category}
@@ -89,7 +93,7 @@ function MenuPage() {
               onClick={() => setSelectedCategory(category)}
             >
               <CategoryIcon category={category} />
-              <span>{category}</span>
+              <span>{category === ALL_CATEGORY ? t("menu.all") : category}</span>
             </button>
           ))}
         </div>
@@ -103,8 +107,8 @@ function MenuPage() {
 
       <section className="menu-section">
         <div className="menu-section__intro">
-          <h2>Nos menus en local</h2>
-          <p>Decouvrez nos categories sur place, avec les prix Ghzaiel clairement presentes.</p>
+          <h2>{t("menu.localTitle")}</h2>
+          <p>{t("menu.localDesc")}</p>
         </div>
         <div className="local-menu-category-grid">
           {localMenuCategories.map((category) => (

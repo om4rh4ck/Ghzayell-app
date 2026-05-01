@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { apiRequest } from "../api/client";
 import StatusNotice from "../components/StatusNotice.jsx";
+import { useI18n } from "../hooks/useI18n.js";
 
 function PointsPage() {
+  const { t } = useI18n();
   const [summary, setSummary] = useState(null);
   const [error, setError] = useState("");
 
@@ -13,26 +15,26 @@ function PointsPage() {
   }, []);
 
   if (error) {
-    return <StatusNotice variant="error" title="Erreur fidelite" message={error} />;
+    return <StatusNotice variant="error" title={t("pointsPage.errorTitle")} message={error} />;
   }
 
   if (!summary) {
-    return <p>Chargement des donnees de fidelite...</p>;
+    return <p>{t("pointsPage.load")}</p>;
   }
 
   return (
     <div className="stack">
       <section className="points-banner points-banner--mockup">
         <div className="points-banner__top">
-          <span>Points</span>
+          <span>{t("pointsPage.title")}</span>
           <strong>{summary.points}</strong>
         </div>
-        <p>Gagnez des points a chaque commande</p>
+        <p>{t("pointsPage.desc")}</p>
       </section>
       <StatusNotice
         variant="reward"
-        title="Recompenses actives"
-        message="Apres chaque commande validee, vos nouveaux points sont credites automatiquement sur votre compte."
+        title={t("pointsPage.rewardTitle")}
+        message={t("pointsPage.rewardDesc")}
       />
 
       <section className="reward-grid reward-grid--stacked">
@@ -40,7 +42,7 @@ function PointsPage() {
           <article key={tier.points} className="reward-row">
             <div className="reward-row__icon">{tier.points}</div>
             <div>
-              <strong>Collectez {tier.points} points</strong>
+              <strong>{t("pointsPage.collect", { points: tier.points })}</strong>
               <p>{tier.reward}</p>
             </div>
           </article>
@@ -48,10 +50,10 @@ function PointsPage() {
       </section>
 
       <section className="pro-card">
-        <span>MENU PRO</span>
-        <p>Profitez d'avantages exclusifs et d'offres speciales.</p>
+        <span>{t("home.menuProTitle")}</span>
+        <p>{t("pointsPage.menuProDesc")}</p>
         <button type="button" className="button-primary button-primary--gold">
-          Abonnez-vous maintenant
+          {t("pointsPage.subscribe")}
         </button>
       </section>
     </div>

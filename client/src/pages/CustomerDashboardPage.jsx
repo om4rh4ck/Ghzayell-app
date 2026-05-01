@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import StatusNotice from "../components/StatusNotice.jsx";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 const GiftIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -50,6 +51,7 @@ const LogoutIcon = () => (
 
 function CustomerDashboardPage() {
   const { user, logout } = useAuth();
+  const { t } = useI18n();
 
   return (
     <div className="stack">
@@ -59,15 +61,15 @@ function CustomerDashboardPage() {
             <img src="/assets/ghzaiel-logo-clean.png" alt="Ghzaiel Food" className="customer-dashboard-hero__logo" />
           </div>
           <div>
-            <span className="eyebrow">Mon espace client</span>
-            <h1>Bienvenue {user?.name || "chez Ghzaiel"}.</h1>
-            <p>Retrouvez vos commandes, vos points fidelite et vos raccourcis utiles.</p>
+            <span className="eyebrow">{t("dashboard.eyebrow")}</span>
+            <h1>{user?.name ? t("dashboard.welcome", { name: user.name }) : t("dashboard.welcomeFallback")}</h1>
+            <p>{t("dashboard.desc")}</p>
           </div>
         </div>
         <div className="customer-dashboard-hero__actions">
           <button type="button" className="customer-dashboard-logout" onClick={logout}>
             <LogoutIcon />
-            <span>Deconnecter</span>
+            <span>{t("common.logout")}</span>
           </button>
         </div>
       </section>
@@ -77,21 +79,21 @@ function CustomerDashboardPage() {
           <span className="dashboard-card-icon" aria-hidden="true">
             <GiftIcon />
           </span>
-          <span className="stat-card__label">Points cadeaux</span>
+          <span className="stat-card__label">{t("dashboard.giftPoints")}</span>
           <strong className="stat-card__value">{user?.points || 0}</strong>
         </article>
         <article className="stat-card accent-cream">
           <span className="dashboard-card-icon" aria-hidden="true">
             <UserBadgeIcon />
           </span>
-          <span className="stat-card__label">Compte</span>
-          <strong className="stat-card__value">{user?.role === "admin" ? "Ghzaielle" : "Client"}</strong>
+          <span className="stat-card__label">{t("dashboard.account")}</span>
+          <strong className="stat-card__value">{user?.role === "admin" ? t("dashboard.accountAdmin") : t("dashboard.accountClient")}</strong>
         </article>
       </section>
       <StatusNotice
         variant="reward"
-        title="Experience client premium"
-        message="Chaque commande confirmee vous rapporte des points. Suivez vos statuts et avantages en direct."
+        title={t("dashboard.premiumTitle")}
+        message={t("dashboard.premiumDesc")}
       />
 
       <section className="customer-dashboard-grid">
@@ -99,29 +101,29 @@ function CustomerDashboardPage() {
           <span className="admin-quick-card__icon" aria-hidden="true">
             <CartIcon />
           </span>
-          <strong>Commander en ligne</strong>
-          <span>Decouvrez le menu et ajoutez vos favoris au panier.</span>
+          <strong>{t("dashboard.orderOnline")}</strong>
+          <span>{t("dashboard.orderOnlineDesc")}</span>
         </Link>
         <Link to="/cart" className="admin-quick-card">
           <span className="admin-quick-card__icon" aria-hidden="true">
             <CartIcon />
           </span>
-          <strong>Mon panier</strong>
-          <span>Finalisez votre commande et choisissez votre livraison.</span>
+          <strong>{t("dashboard.myCart")}</strong>
+          <span>{t("dashboard.myCartDesc")}</span>
         </Link>
         <Link to="/orders" className="admin-quick-card">
           <span className="admin-quick-card__icon" aria-hidden="true">
             <OrdersIcon />
           </span>
-          <strong>Mes commandes</strong>
-          <span>Suivez vos commandes confirmees et leur statut.</span>
+          <strong>{t("dashboard.myOrders")}</strong>
+          <span>{t("dashboard.myOrdersDesc")}</span>
         </Link>
         <Link to="/points" className="admin-quick-card">
           <span className="admin-quick-card__icon" aria-hidden="true">
             <SparkIcon />
           </span>
-          <strong>Mes points</strong>
-          <span>Consultez vos points cadeaux et vos avantages fidelite.</span>
+          <strong>{t("dashboard.myPoints")}</strong>
+          <span>{t("dashboard.myPointsDesc")}</span>
         </Link>
       </section>
     </div>

@@ -4,10 +4,12 @@ import { apiRequest } from "../api/client";
 import ProductCard from "../components/ProductCard.jsx";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 function SearchPage() {
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const { t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const [query, setQuery] = useState("");
@@ -44,7 +46,7 @@ function SearchPage() {
     }
 
     addToCart(product);
-    setMessage(`${product.name} a ete ajoute au panier.`);
+    setMessage(t("search.addedToCart", { name: product.name }));
     navigate("/cart");
   };
 
@@ -53,16 +55,16 @@ function SearchPage() {
       <section className="search-header-card">
         <div className="search-title-row">
           <div>
-            <span className="eyebrow auth-eyebrow">Recherche</span>
-            <h1>Rechercher dans l'application</h1>
+            <span className="eyebrow auth-eyebrow">{t("search.eyebrow")}</span>
+            <h1>{t("search.title")}</h1>
           </div>
         </div>
 
         <label className="search-field">
-          <span>Recherche par mot</span>
+          <span>{t("search.label")}</span>
           <input
             type="search"
-            placeholder="Brik, boisson, gourmand..."
+            placeholder={t("search.placeholder")}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -74,8 +76,8 @@ function SearchPage() {
 
       {!error && filteredProducts.length === 0 ? (
         <section className="card">
-          <h3>Aucun resultat</h3>
-          <p>Essayez un autre mot-cle comme brik, thon, gourmand ou boisson.</p>
+          <h3>{t("search.noResultsTitle")}</h3>
+          <p>{t("search.noResultsDesc")}</p>
         </section>
       ) : (
         <section className="product-grid product-grid--mobile">

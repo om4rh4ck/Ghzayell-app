@@ -1,5 +1,7 @@
 import { NavLink, Outlet, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
+import LanguageFab from "../components/LanguageFab.jsx";
 
 const DashboardIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -62,6 +64,7 @@ const AdminUserIcon = () => (
 
 function AdminLayout() {
   const { user, logout } = useAuth();
+  const { t } = useI18n();
 
   return (
     <div className="admin-shell">
@@ -71,8 +74,8 @@ function AdminLayout() {
             <img src="/assets/ghzaiel-logo-clean.png" alt="Ghzaiel Food" className="brand__logo" />
           </div>
           <div>
-            <strong>Admin Ghzaiel</strong>
-            <small>Gestion premium du restaurant</small>
+            <strong>{t("admin.title")}</strong>
+            <small>{t("admin.subtitle")}</small>
           </div>
         </div>
       </section>
@@ -81,8 +84,8 @@ function AdminLayout() {
         <aside className="admin-sidebar">
           <div className="admin-sidebar__brand">
             <span className="eyebrow">Ghzaiel Food</span>
-            <h2>Tableau de bord admin</h2>
-            <p>Gestion complete du restaurant, des commandes et des clients.</p>
+            <h2>{t("admin.adminPanelTitle")}</h2>
+            <p>{t("admin.adminPanelDesc")}</p>
           </div>
 
           <nav className="admin-nav">
@@ -90,31 +93,31 @@ function AdminLayout() {
               <span className="admin-nav__icon">
                 <DashboardIcon />
               </span>
-              <span>Tableau de bord</span>
+              <span>{t("admin.dashboard")}</span>
             </NavLink>
             <NavLink to="/admin/menu" className="admin-nav__link">
               <span className="admin-nav__icon">
                 <ProductIcon />
               </span>
-              <span>Produits</span>
+              <span>{t("admin.products")}</span>
             </NavLink>
             <NavLink to="/admin/orders" className="admin-nav__link">
               <span className="admin-nav__icon">
                 <OrdersIcon />
               </span>
-              <span>Commandes</span>
+              <span>{t("admin.orders")}</span>
             </NavLink>
             <NavLink to="/admin/users" className="admin-nav__link">
               <span className="admin-nav__icon">
                 <UsersIcon />
               </span>
-              <span>Clients</span>
+              <span>{t("admin.customers")}</span>
             </NavLink>
             <NavLink to="/admin/gallery" className="admin-nav__link">
               <span className="admin-nav__icon">
                 <GalleryIcon />
               </span>
-              <span>Evenements</span>
+              <span>{t("admin.gallery")}</span>
             </NavLink>
           </nav>
 
@@ -129,11 +132,11 @@ function AdminLayout() {
             <div className="admin-sidebar__actions">
               <Link to="/" className="button-secondary admin-sidebar__button">
                 <SiteIcon />
-                <span>Voir le site</span>
+                <span>{t("admin.viewSite")}</span>
               </Link>
               <button type="button" className="button-primary admin-sidebar__button" onClick={logout}>
                 <LogoutIcon />
-                <span>Deconnexion</span>
+                <span>{t("common.logout")}</span>
               </button>
             </div>
           </div>
@@ -142,6 +145,7 @@ function AdminLayout() {
           <Outlet />
         </section>
       </div>
+      <LanguageFab />
     </div>
   );
 }

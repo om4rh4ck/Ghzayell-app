@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiRequest } from "../../api/client";
 import StatCard from "../../components/StatCard.jsx";
+import { useI18n } from "../../hooks/useI18n.js";
 
 function AdminDashboardPage() {
+  const { t } = useI18n();
   const [stats, setStats] = useState(null);
   const [contacts, setContacts] = useState([]);
   const [error, setError] = useState("");
@@ -26,23 +28,23 @@ function AdminDashboardPage() {
   }
 
   if (!stats) {
-    return <p>Chargement du tableau de bord...</p>;
+    return <p>{t("common.loading")}</p>;
   }
 
   return (
     <div className="stack">
       <div className="section-heading admin-hero">
         <div>
-          <span className="eyebrow">Vue d'ensemble admin</span>
-          <h1>Tableau de bord pro du restaurant.</h1>
-          <p>Suivez vos performances et accedez rapidement aux actions importantes.</p>
+          <span className="eyebrow">{t("admin.dashboardEyebrow")}</span>
+          <h1>{t("admin.dashboardTitle")}</h1>
+          <p>{t("admin.dashboardDesc")}</p>
         </div>
         <div className="admin-hero__actions">
           <Link to="/admin/menu" className="button-primary">
-            Gerer les produits
+            {t("admin.manageProducts")}
           </Link>
           <Link to="/admin/orders" className="button-secondary">
-            Voir les commandes
+            {t("admin.viewOrders")}
           </Link>
         </div>
       </div>
@@ -70,8 +72,8 @@ function AdminDashboardPage() {
       <section className="card admin-contact-card">
         <div className="admin-card-header">
           <div>
-            <h2>Messages de contact</h2>
-            <span>Demandes envoyees depuis la page d'accueil</span>
+            <h2>{t("admin.contactMessages")}</h2>
+            <span>{t("admin.contactDesc")}</span>
           </div>
         </div>
         {contacts.length === 0 ? (

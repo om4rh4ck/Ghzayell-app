@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import { apiRequest, getMediaUrl } from "../../api/client";
-
-const statuses = [
-  { value: "pending", label: "En attente" },
-  { value: "confirmed", label: "Confirmee" },
-  { value: "preparing", label: "En preparation" },
-  { value: "delivered", label: "Livree" },
-  { value: "cancelled", label: "Annulee" }
-];
+import { useI18n } from "../../hooks/useI18n.js";
 
 function AdminOrdersPage() {
+  const { t } = useI18n();
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+
+  const statuses = [
+    { value: "pending", label: t("orders.status.pending") },
+    { value: "confirmed", label: t("orders.status.confirmed") },
+    { value: "preparing", label: t("orders.status.preparing") },
+    { value: "delivered", label: t("orders.status.delivered") },
+    { value: "cancelled", label: t("orders.status.cancelled") }
+  ];
 
   const loadOrders = async () => {
     const data = await apiRequest("/orders");
@@ -68,9 +70,9 @@ function AdminOrdersPage() {
     <div className="stack">
       <section className="section-heading">
         <div>
-          <span className="eyebrow">Commandes</span>
-          <h1>Gestion des commandes</h1>
-          <p>Suivez les commandes en temps reel et mettez a jour chaque statut.</p>
+          <span className="eyebrow">{t("admin.ordersEyebrow")}</span>
+          <h1>{t("admin.ordersTitle")}</h1>
+          <p>{t("admin.ordersDesc")}</p>
         </div>
       </section>
       <section className="admin-orders-kpi-grid">

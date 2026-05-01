@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 function AuthPage() {
   const { login, register, loading, user, isReady } = useAuth();
+  const { t } = useI18n();
   const [isRegister, setIsRegister] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
@@ -51,18 +53,18 @@ function AuthPage() {
         </div>
 
         <div className="auth-card__intro">
-          <span className="eyebrow auth-eyebrow">{isRegister ? "Creer un compte" : "Bienvenue"}</span>
-          <h1>{isRegister ? "Rejoignez Ghzaiel Food" : "Connexion a votre compte"}</h1>
-          <p>{isRegister ? "Inscrivez-vous pour commander, gagner des points et suivre vos avantages." : "Connectez-vous pour commander rapidement et consulter vos points fidelite."}</p>
+          <span className="eyebrow auth-eyebrow">{isRegister ? t("auth.registerEyebrow") : t("auth.welcomeEyebrow")}</span>
+          <h1>{isRegister ? t("auth.registerTitle") : t("auth.loginTitle")}</h1>
+          <p>{isRegister ? t("auth.registerDesc") : t("auth.loginDesc")}</p>
         </div>
 
         <form className="stack auth-form" onSubmit={handleSubmit}>
           {isRegister && (
             <label className="auth-field">
-              <span>Nom complet</span>
+              <span>{t("auth.fullName")}</span>
               <input
                 type="text"
-                placeholder="Votre nom complet"
+                placeholder={t("auth.fullNamePlaceholder")}
                 value={form.name}
                 onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
                 required
@@ -70,33 +72,33 @@ function AuthPage() {
             </label>
           )}
           <label className="auth-field">
-            <span>Email</span>
+            <span>{t("auth.email")}</span>
             <input
               type="email"
-              placeholder="votre@email.com"
+              placeholder={t("auth.emailPlaceholder")}
               value={form.email}
               onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
               required
             />
           </label>
           <label className="auth-field">
-            <span>Mot de passe</span>
+            <span>{t("auth.password")}</span>
             <input
               type="password"
-              placeholder="Votre mot de passe"
+              placeholder={t("auth.passwordPlaceholder")}
               value={form.password}
               onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
               required
             />
           </label>
           <button type="submit" className="button-primary auth-submit" disabled={loading}>
-            {loading ? "Veuillez patienter..." : isRegister ? "Creer mon compte" : "Se connecter"}
+            {loading ? t("auth.pleaseWait") : isRegister ? t("auth.createAccount") : t("auth.login")}
           </button>
           {error && <p className="message error">{error}</p>}
         </form>
 
         <button type="button" className="auth-switch" onClick={() => setIsRegister((current) => !current)}>
-          {isRegister ? "Vous avez deja un compte ? Se connecter" : "Vous n'avez pas de compte ? S'inscrire"}
+          {isRegister ? t("auth.switchToLogin") : t("auth.switchToRegister")}
         </button>
       </section>
     </div>

@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
+import { useI18n } from "../hooks/useI18n.js";
 
 const HomeIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -43,6 +44,7 @@ const OrdersIcon = () => (
 
 function Footer() {
   const { itemCount } = useCart();
+  const { t } = useI18n();
 
   return (
     <footer className="mobile-tabbar">
@@ -50,33 +52,33 @@ function Footer() {
         <span className="tab-icon">
           <HomeIcon />
         </span>
-        <span>Accueil</span>
+        <span>{t("footer.home")}</span>
       </NavLink>
       <NavLink to="/search" className="tab-item">
         <span className="tab-icon">
           <SearchIcon />
         </span>
-        <span>Recherche</span>
+        <span>{t("footer.search")}</span>
       </NavLink>
       <NavLink to="/menu" className="tab-item">
         <span className="tab-icon">
           <MenuIcon />
         </span>
-        <span>Menu</span>
+        <span>{t("footer.menu")}</span>
       </NavLink>
       <NavLink to="/points" className="tab-item">
         <span className="tab-icon tab-icon--badge">
           <PointsIcon />
           <span className="tab-badge">5</span>
         </span>
-        <span>Points</span>
+        <span>{t("footer.points")}</span>
       </NavLink>
       <NavLink to="/cart" className="tab-item">
         <span className="tab-icon tab-icon--badge">
           <OrdersIcon />
           {itemCount > 0 ? <span className="tab-badge">{itemCount}</span> : null}
         </span>
-        <span>Panier</span>
+        <span>{t("footer.cart")}</span>
       </NavLink>
     </footer>
   );

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { apiRequest, getMediaUrl } from "../api/client";
 import { localMenuCategories } from "../data/localMenu.js";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 const ContactUserIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -40,6 +41,7 @@ const ContactMessageIcon = () => (
 
 function HomePage() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const [proForm, setProForm] = useState({ fullName: "", email: "", phone: "", message: "" });
   const [proMessage, setProMessage] = useState("");
   const [proError, setProError] = useState("");
@@ -119,7 +121,7 @@ function HomePage() {
         method: "POST",
         body: JSON.stringify(proForm)
       });
-      setProMessage("Votre message a ete envoye a l'equipe Ghzaielle avec succes.");
+      setProMessage(t("home.messageSent"));
       setProForm({ fullName: "", email: "", phone: "", message: "" });
     } catch (error) {
       setProError(error.message);
@@ -142,8 +144,8 @@ function HomePage() {
 
       <section className="menu-section home-local-menu-section">
         <div className="menu-section__intro">
-          <h2>Nos menus en local</h2>
-          <p>Decouvrez nos categories sur place, avec les prix Ghzaiel clairement presentes.</p>
+          <h2>{t("home.localMenusTitle")}</h2>
+          <p>{t("home.localMenusDesc")}</p>
         </div>
         <div className="local-menu-category-grid">
           {localMenuCategories.map((category) => (
@@ -171,7 +173,7 @@ function HomePage() {
       <section className="home-sections-grid">
         <section className="menu-preview-stack">
           <div className="menu-preview-stack__intro">
-            <h2>Menu Ghzaielle a commander en ligne</h2>
+            <h2>{t("home.onlineTitle")}</h2>
           </div>
 
           {featuredOnlineProducts.map((product) => {
@@ -186,7 +188,7 @@ function HomePage() {
                     <small>{product.description}</small>
                   </div>
                   <Link to={orderEntryPath} className="featured-dish__cta">
-                    Commander
+                    {t("common.order")}
                   </Link>
                 </div>
                 <div className="featured-dish__price">
@@ -197,13 +199,13 @@ function HomePage() {
           })}
 
           <Link to="/menu" className="menu-preview-stack__link menu-preview-stack__link--bottom">
-            Voir Tous
+            {t("common.seeAll")}
           </Link>
         </section>
 
         <section className="promo-banner">
-          <span>MENU PRO</span>
-          <p>Profitez d'avantages exclusifs et de reductions.</p>
+          <span>{t("home.menuProTitle")}</span>
+          <p>{t("home.menuProDesc")}</p>
           <div className="promo-banner__qr-wrap">
             <a href="/menu" className="promo-banner__qr" aria-label="Ouvrir le menu Ghzaiel avec le QR code">
               <img src={menuQrUrl} alt="QR code vers le menu Ghzaiel" className="promo-banner__qr-image" />
@@ -211,21 +213,21 @@ function HomePage() {
                 <img src="/assets/ghzaiel-logo-clean.png" alt="Ghzaiel Food" />
               </span>
             </a>
-            <small>Scannez pour ouvrir le menu Ghzaiel</small>
+            <small>{t("home.scanMenu")}</small>
           </div>
           <form className="promo-banner__form" onSubmit={handleProSubmit}>
             <div className="promo-banner__form-intro">
-              <strong>Contact Ghzaielle</strong>
-              <p>Laissez vos coordonnees et votre message. L'equipe Ghzaielle vous repondra rapidement.</p>
+              <strong>{t("home.contactAdminTitle")}</strong>
+              <p>{t("home.contactAdminDesc")}</p>
             </div>
             <label className="promo-banner__field">
               <span>
                 <ContactUserIcon />
-                <em>Nom et prenom</em>
+                <em>{t("home.fullName")}</em>
               </span>
               <input
                 type="text"
-                placeholder="Nom et prenom"
+                placeholder={t("home.fullNamePlaceholder")}
                 value={proForm.fullName}
                 onChange={(event) => setProForm((current) => ({ ...current, fullName: event.target.value }))}
                 required
@@ -234,11 +236,11 @@ function HomePage() {
             <label className="promo-banner__field">
               <span>
                 <ContactMailIcon />
-                <em>Email</em>
+                <em>{t("common.email")}</em>
               </span>
               <input
                 type="email"
-                placeholder="Votre email"
+                placeholder={t("home.emailPlaceholder")}
                 value={proForm.email}
                 onChange={(event) => setProForm((current) => ({ ...current, email: event.target.value }))}
                 required
@@ -247,11 +249,11 @@ function HomePage() {
             <label className="promo-banner__field">
               <span>
                 <ContactPhoneIcon />
-                <em>Numero</em>
+                <em>{t("home.phoneLabel")}</em>
               </span>
               <input
                 type="tel"
-                placeholder="Votre numero"
+                placeholder={t("home.phonePlaceholder")}
                 value={proForm.phone}
                 onChange={(event) => setProForm((current) => ({ ...current, phone: event.target.value }))}
                 required
@@ -260,17 +262,17 @@ function HomePage() {
             <label className="promo-banner__field">
               <span>
                 <ContactMessageIcon />
-                <em>Message</em>
+                <em>{t("home.messageLabel")}</em>
               </span>
               <textarea
-                placeholder="Votre message"
+                placeholder={t("home.messagePlaceholder")}
                 value={proForm.message}
                 onChange={(event) => setProForm((current) => ({ ...current, message: event.target.value }))}
                 required
               />
             </label>
             <button type="submit" className="button-primary button-primary--gold promo-banner__submit">
-              Envoyer au contact Ghzaielle
+              {t("home.sendAdmin")}
             </button>
             {proError ? <p className="message error">{proError}</p> : null}
             {proMessage ? <p className="promo-banner__success">{proMessage}</p> : null}
@@ -278,8 +280,8 @@ function HomePage() {
 
           <section className="promo-banner__contact-card">
             <div className="promo-banner__contact-intro">
-              <strong>Coordonnees Ghzaiel</strong>
-              <p>Retrouvez notre adresse, notre contact direct et l'acces rapide a la localisation.</p>
+              <strong>{t("home.contactDetailsTitle")}</strong>
+              <p>{t("home.contactDetailsDesc")}</p>
             </div>
 
             <div className="promo-banner__contact-list">
@@ -293,8 +295,8 @@ function HomePage() {
                   <ContactLocationIcon />
                 </span>
                 <span>
-                  <strong>Adresse</strong>
-                  <em>Rue Med Ferjeni, Houmt Souk 4180</em>
+                  <strong>{t("common.address")}</strong>
+                  <em>{t("home.addressValue")}</em>
                 </span>
               </a>
 
@@ -303,8 +305,8 @@ function HomePage() {
                   <ContactPhoneIcon />
                 </span>
                 <span>
-                  <strong>Numero</strong>
-                  <em>25 644 212</em>
+                  <strong>{t("common.phone")}</strong>
+                  <em>{t("home.phoneValue")}</em>
                 </span>
               </a>
 
@@ -313,8 +315,8 @@ function HomePage() {
                   <ContactMailIcon />
                 </span>
                 <span>
-                  <strong>Email</strong>
-                  <em>contact@ghzaielfood.com</em>
+                  <strong>{t("common.email")}</strong>
+                  <em>{t("home.emailValue")}</em>
                 </span>
               </a>
             </div>

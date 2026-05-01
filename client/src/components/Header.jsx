@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 const HomeIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -88,34 +89,35 @@ const AuthIcon = () => (
 
 function Header() {
   const { user } = useAuth();
+  const { t } = useI18n();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const profilePath = user ? (user.role === "admin" ? "/admin" : "/dashboard") : "/auth";
   const appLinks = [
-    { to: "/about", label: "A propos", icon: AboutIcon },
-    { to: "/gallery", label: "Evenements", icon: GalleryIcon },
-    { to: "/orders", label: "Commandes", icon: OrdersIcon },
-    { to: "/menu", label: "Menu", icon: MenuCardIcon },
-    { to: profilePath, label: "Profile", icon: ProfileIcon },
-    { to: "/points", label: "Points", icon: PointsIcon }
+    { to: "/about", label: t("common.about"), icon: AboutIcon },
+    { to: "/gallery", label: t("common.events"), icon: GalleryIcon },
+    { to: "/orders", label: t("common.orders"), icon: OrdersIcon },
+    { to: "/menu", label: t("common.menu"), icon: MenuCardIcon },
+    { to: profilePath, label: t("common.profile"), icon: ProfileIcon },
+    { to: "/points", label: t("common.points"), icon: PointsIcon }
   ];
 
   const pageMeta = {
-    "/": { title: "Accueil", subtitle: "Le meilleur Brik de Tunisie", icon: HomeIcon },
-    "/search": { title: "Recherche", subtitle: "Trouvez rapidement vos produits", icon: SearchIcon },
-    "/menu": { title: "Menu", subtitle: "Savourez le numero un de Tunisie", icon: MenuCardIcon },
-    "/about": { title: "A propos", subtitle: "Decouvrez l'histoire de Ghzaielle Food", icon: AboutIcon },
-    "/gallery": { title: "Evenements", subtitle: "Reussites et moments forts de Ghzaielle", icon: GalleryIcon },
-    "/points": { title: "Points", subtitle: "Gagnez des points a chaque commande", icon: PointsIcon },
-    "/orders": { title: "Commandes", subtitle: "Suivez vos commandes en direct", icon: OrdersIcon },
-    "/cart": { title: "Panier", subtitle: "Finalisez votre commande", icon: CartIcon },
-    "/auth": { title: "Connexion", subtitle: "Entrez dans l'univers Ghzaiel", icon: AuthIcon },
-    "/dashboard": { title: "Mon espace", subtitle: "Retrouvez vos commandes et vos avantages", icon: ProfileIcon }
+    "/": { title: t("common.home"), subtitle: t("header.homeSubtitle"), icon: HomeIcon },
+    "/search": { title: t("common.search"), subtitle: t("header.searchSubtitle"), icon: SearchIcon },
+    "/menu": { title: t("common.menu"), subtitle: t("header.menuSubtitle"), icon: MenuCardIcon },
+    "/about": { title: t("common.about"), subtitle: t("header.aboutSubtitle"), icon: AboutIcon },
+    "/gallery": { title: t("common.events"), subtitle: t("header.eventsSubtitle"), icon: GalleryIcon },
+    "/points": { title: t("common.points"), subtitle: t("header.pointsSubtitle"), icon: PointsIcon },
+    "/orders": { title: t("common.orders"), subtitle: t("header.ordersSubtitle"), icon: OrdersIcon },
+    "/cart": { title: t("common.cart"), subtitle: t("header.cartSubtitle"), icon: CartIcon },
+    "/auth": { title: t("header.authTitle"), subtitle: t("header.authSubtitle"), icon: AuthIcon },
+    "/dashboard": { title: t("header.dashboardTitle"), subtitle: t("header.dashboardSubtitle"), icon: ProfileIcon }
   };
 
   const current = pageMeta[location.pathname] || {
-    title: "Ghzaiel Food",
-    subtitle: "Cuisine tunisienne moderne",
+    title: t("header.fallbackTitle"),
+    subtitle: t("header.fallbackSubtitle"),
     icon: HomeIcon
   };
 
@@ -145,12 +147,12 @@ function Header() {
           <button
             type="button"
             className="header-icon-button"
-            aria-label="Ouvrir le menu de l'application"
+            aria-label={t("header.appMenuLabel")}
             onClick={() => setIsMenuOpen((currentValue) => !currentValue)}
           >
             <MenuIcon />
           </button>
-          <NavLink to={profilePath} className="header-icon-button" aria-label="Ouvrir mon espace">
+          <NavLink to={profilePath} className="header-icon-button" aria-label={t("header.openProfile")}>
             <ProfileIcon />
           </NavLink>
         </div>
