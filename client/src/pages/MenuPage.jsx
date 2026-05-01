@@ -6,7 +6,7 @@ import { localMenuCategories } from "../data/localMenu.js";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 import { useI18n } from "../hooks/useI18n.js";
-import { translateMenuCategory, translateMenuSubtitle } from "../utils/menuCategoryLabel.js";
+import { translateMenuCategory, translateMenuSubtitle, translateMenuItem, translateMenuItemDescription } from "../utils/menuCategoryLabel.js";
 
 function CategoryIcon({ category }) {
   const normalized = String(category || "").toLowerCase();
@@ -129,10 +129,10 @@ function MenuPage() {
                 {category.items.map((item) => (
                   <article key={`${category.title}-${item.name}`} className="menu-local-item">
                     <div className="menu-local-item__head">
-                      <strong>{item.name}</strong>
+                      <strong>{translateMenuItem(language, item.name, item.name)}</strong>
                       <span>{item.price}</span>
                     </div>
-                    <p>{item.description}</p>
+                    <p>{translateMenuItemDescription(language, item.name, item.description)}</p>
                   </article>
                 ))}
               </div>
