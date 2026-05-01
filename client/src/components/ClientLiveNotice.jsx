@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { apiRequest } from "../api/client";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 import StatusNotice from "./StatusNotice.jsx";
 
 function ClientLiveNotice() {
   const { user, refreshProfile } = useAuth();
+  const { t } = useI18n();
   const [orders, setOrders] = useState([]);
   const [dismissed, setDismissed] = useState({});
 
@@ -42,8 +44,8 @@ function ClientLiveNotice() {
             return {
               key,
               variant: "reward",
-              title: `Commande #${order._id.slice(-6)} confirmee`,
-              message: "Bravo, tu as gagne 15 points."
+              title: t("liveNotice.confirmedTitle", { id: order._id.slice(-6) }),
+              message: t("liveNotice.confirmedMessage")
             };
           }
 
@@ -51,15 +53,15 @@ function ClientLiveNotice() {
             return {
               key,
               variant: "info",
-              title: `Commande #${order._id.slice(-6)} en cours`,
-              message: "Suivi auto actif. Votre espace se met a jour automatiquement."
+              title: t("liveNotice.progressTitle", { id: order._id.slice(-6) }),
+              message: t("liveNotice.progressMessage")
             };
           }
 
           return null;
         })
         .filter(Boolean),
-    [orders, dismissed]
+    [dismissed, orders, t]
   );
 
   if (!notices.length) return null;

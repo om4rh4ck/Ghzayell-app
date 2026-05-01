@@ -4,6 +4,7 @@ import { apiRequest, getMediaUrl } from "../api/client";
 import { localMenuCategories } from "../data/localMenu.js";
 import { useAuth } from "../hooks/useAuth";
 import { useI18n } from "../hooks/useI18n.js";
+import { translateMenuCategory, translateMenuSubtitle } from "../utils/menuCategoryLabel.js";
 
 const ContactUserIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -41,7 +42,7 @@ const ContactMessageIcon = () => (
 
 function HomePage() {
   const { user } = useAuth();
-  const { t } = useI18n();
+  const { language, t } = useI18n();
   const [proForm, setProForm] = useState({ fullName: "", email: "", phone: "", message: "" });
   const [proMessage, setProMessage] = useState("");
   const [proError, setProError] = useState("");
@@ -151,8 +152,8 @@ function HomePage() {
           {localMenuCategories.map((category) => (
             <section key={category.title} className="menu-local-board menu-local-board--detailed">
               <div className="menu-local-board__heading">
-                <h3>{category.title}</h3>
-                {category.subtitle ? <p>{category.subtitle}</p> : null}
+                <h3>{translateMenuCategory(language, category.title)}</h3>
+                {category.subtitle ? <p>{translateMenuSubtitle(language, category.subtitle)}</p> : null}
               </div>
               <div className="menu-local-list">
                 {category.items.map((item) => (
@@ -207,8 +208,8 @@ function HomePage() {
           <span>{t("home.menuProTitle")}</span>
           <p>{t("home.menuProDesc")}</p>
           <div className="promo-banner__qr-wrap">
-            <a href="/menu" className="promo-banner__qr" aria-label="Ouvrir le menu Ghzaiel avec le QR code">
-              <img src={menuQrUrl} alt="QR code vers le menu Ghzaiel" className="promo-banner__qr-image" />
+            <a href="/menu" className="promo-banner__qr" aria-label={t("home.qrAriaLabel")}>
+              <img src={menuQrUrl} alt={t("home.scanMenu")} className="promo-banner__qr-image" />
               <span className="promo-banner__qr-logo">
                 <img src="/assets/ghzaiel-logo-clean.png" alt="Ghzaiel Food" />
               </span>

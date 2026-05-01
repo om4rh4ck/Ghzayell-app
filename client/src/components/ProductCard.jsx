@@ -1,4 +1,5 @@
 import { getMediaUrl } from "../api/client";
+import { useI18n } from "../hooks/useI18n.js";
 
 const AddCartIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -10,6 +11,7 @@ const AddCartIcon = () => (
 );
 
 function ProductCard({ product, onAddToCart }) {
+  const { t } = useI18n();
   const displayPrice = product.effectivePrice ?? product.promoPrice ?? product.price;
   const mediaUrl = getMediaUrl(product.image);
 
@@ -33,7 +35,7 @@ function ProductCard({ product, onAddToCart }) {
             onClick={() => onAddToCart({ ...product, price: displayPrice })}
           >
             <AddCartIcon />
-            <span>Ajouter</span>
+            <span>{t("productCard.add")}</span>
           </button>
         </div>
       </div>

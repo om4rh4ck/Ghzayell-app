@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { apiRequest, getMediaUrl } from "../api/client";
+import { useI18n } from "../hooks/useI18n.js";
 
 function GalleryPage() {
+  const { t } = useI18n();
   const [items, setItems] = useState([]);
   const [error, setError] = useState("");
 
@@ -15,8 +17,8 @@ function GalleryPage() {
     <div className="stack">
       <section className="section-heading">
         <div>
-          <span className="eyebrow">Evenements</span>
-          <h1>Reussites Ghzaielle et moments forts.</h1>
+          <span className="eyebrow">{t("gallery.eyebrow")}</span>
+          <h1>{t("gallery.title")}</h1>
         </div>
       </section>
       <section className="card event-highlight">
@@ -24,12 +26,9 @@ function GalleryPage() {
           <img src="/assets/evetorchi.png" alt="Torchi Food Awards - meilleure brik a Tunis" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2025, Meilleure Brik en Tunisie</h2>
-          <p>
-            Ghzaielle celebre une grande reussite: distinction recue lors de l'evenement Torchi Awards pour la
-            meilleure brik a Tunis.
-          </p>
-          <p>Date: 2025.</p>
+          <h2>{t("gallery.event1Title")}</h2>
+          <p>{t("gallery.event1Body")}</p>
+          <p>{t("gallery.event1Date")}</p>
         </div>
       </section>
       <section className="card event-highlight">
@@ -37,12 +36,9 @@ function GalleryPage() {
           <img src="/assets/torchi2024.png" alt="Evenement Torchi Awards 2024" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2024, Meilleure Brik en Tunisie</h2>
-          <p>
-            Ghzaielle gagne la meilleure brik a Tunis lors de l'evenement Torchi Awards 2024, une distinction qui
-            confirme notre savoir-faire artisanal.
-          </p>
-          <p>Premiere participation officielle aux evenements: 2025.</p>
+          <h2>{t("gallery.event2Title")}</h2>
+          <p>{t("gallery.event2Body")}</p>
+          <p>{t("gallery.event2Date")}</p>
         </div>
       </section>
       <section className="card event-highlight">
@@ -50,12 +46,9 @@ function GalleryPage() {
           <img src="/assets/torchi2021.png" alt="Evenement Torchi 2021 - meilleur plat tunisien a Tunis" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2021, Meilleure Plat Tunisien en Tunisie</h2>
-          <p>
-            Ghzaielle remporte une distinction importante a Tunis en 2021 lors de l'evenement Torchi, avec le prix du
-            meilleur plat tunisien.
-          </p>
-          <p>Date: 2021.</p>
+          <h2>{t("gallery.event3Title")}</h2>
+          <p>{t("gallery.event3Body")}</p>
+          <p>{t("gallery.event3Date")}</p>
         </div>
       </section>
       <section className="card event-highlight">
@@ -63,12 +56,9 @@ function GalleryPage() {
           <img src="/assets/brik2021.png" alt="Torchi Food Awards 2021 - meilleure brik en Tunisie" />
         </div>
         <div className="event-highlight__content">
-          <h2>Torchi Food Awards 2021, Meilleure Brik en Tunisie</h2>
-          <p>
-            Ghzaielle gagne la meilleure brik en Tunisie lors de l'evenement Torchi Food Awards 2021, confirmant
-            l'excellence et l'authenticite de son savoir-faire.
-          </p>
-          <p>Date: 2021.</p>
+          <h2>{t("gallery.event4Title")}</h2>
+          <p>{t("gallery.event4Body")}</p>
+          <p>{t("gallery.event4Date")}</p>
         </div>
       </section>
       {error && <p className="message error">{error}</p>}

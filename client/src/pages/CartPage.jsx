@@ -3,6 +3,7 @@ import { apiRequest, getMediaUrl } from "../api/client";
 import StatusNotice from "../components/StatusNotice.jsx";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
+import { useI18n } from "../hooks/useI18n.js";
 
 function DeliveryIcon() {
   return (
@@ -99,6 +100,7 @@ function ConfirmIcon() {
 function CartPage() {
   const { items, total, updateQuantity, removeFromCart, clearCart, itemCount } = useCart();
   const { user, refreshProfile } = useAuth();
+  const { t } = useI18n();
   const [firstName, setFirstName] = useState(user?.name?.split(" ")[0] || "");
   const [lastName, setLastName] = useState(user?.name?.split(" ").slice(1).join(" ") || "");
   const [phone, setPhone] = useState("");
@@ -153,7 +155,7 @@ function CartPage() {
       }
 
       if (!normalizedItems.length) {
-        setError("Votre panier contient des produits obsoletes. Ajoutez de nouveau vos produits puis reessayez.");
+        setError(t("cart.staleCartError"));
         return;
       }
 
@@ -180,8 +182,8 @@ function CartPage() {
       setRedeemPoints(0);
       setMessage(
         invalidItems.length
-          ? "Commande confirmee. Certains anciens produits non valides ont ete retires du panier."
-          : "Votre commande a ete confirmee avec succes."
+          ? t("cart.confirmAdjusted")
+          : t("cart.confirmSuccess")
       );
       await refreshProfile();
     } catch (err) {
@@ -194,13 +196,15 @@ function CartPage() {
       <section className="card checkout-cart-card">
         <div className="checkout-section-header">
           <div>
-            <span className="eyebrow">Panier</span>
-            <h1>Votre panier</h1>
+            <span className="eyebrow">{t("cart.cartEyebrow")}</span>
+            <h1>{t("cart.cartTitle")}</h1>
           </div>
-          <strong className="checkout-count-badge">{itemCount} article{itemCount > 1 ? "s" : ""}</strong>
+          <strong className="checkout-count-badge">
+            {t("cart.articles", { count: itemCount, suffix: itemCount > 1 ? "s" : "" })}
+          </strong>
         </div>
         {items.length === 0 ? (
-          <p>Votre panier est vide. Ajoutez quelque chose de delicieux depuis le menu.</p>
+          <p>{t("cart.cartEmpty")}</p>
         ) : (
           <div className="stack">
             {items.map((item) => (
@@ -213,13 +217,13 @@ function CartPage() {
                 <div className="cart-item__details">
                   <h3>{item.name}</h3>
                   <p>{item.price.toFixed(2)} DT</p>
-                  <small>Total : {(item.price * item.quantity).toFixed(2)} DT</small>
+                  <small>{t("cart.totalLine", { total: (item.price * item.quantity).toFixed(2) })}</small>
                 </div>
                 <div className="cart-item__actions">
                   <label className="checkout-field checkout-field--compact">
                     <span>
                       <QuantityIcon />
-                      <em>Quantite</em>
+                      <em>{t("cart.quantity")}</em>
                     </span>
                     <input
                       type="number"
@@ -230,7 +234,7 @@ function CartPage() {
                   </label>
                   <button type="button" className="button-secondary button-secondary--danger" onClick={() => removeFromCart(item.product)}>
                     <RemoveIcon />
-                    <span>Retirer</span>
+                    <span>{t("cart.remove")}</span>
                   </button>
                 </div>
               </div>
@@ -242,8 +246,8 @@ function CartPage() {
       <section className="card checkout-form-card">
         <div className="checkout-section-header">
           <div>
-            <span className="eyebrow">Checkout</span>
-            <h2>Validation de commande</h2>
+            <span className="eyebrow">{t("cart.checkoutEyebrow")}</span>
+            <h2>{t("cart.checkoutTitle")}</h2>
           </div>
           <strong className="price-highlight">{total.toFixed(2)} DT</strong>
         </div>
@@ -259,8 +263,8 @@ function CartPage() {
                 <DeliveryIcon />
               </span>
               <span className="checkout-mode-card__content">
-                <strong>Livraison</strong>
-                <small>Recevez votre commande a l'adresse indiquee.</small>
+                <strong>{t("cart.delivery")}</strong>
+                <small>{t("cart.deliveryDesc")}</small>
               </span>
             </button>
 
@@ -273,8 +277,8 @@ function CartPage() {
                 <PickupIcon />
               </span>
               <span className="checkout-mode-card__content">
-                <strong>Retrait en local</strong>
-                <small>Votre commande sera prete apres 15 minutes.</small>
+                <strong>{t("cart.pickup")}</strong>
+                <small>{t("cart.pickupDesc")}</small>
               </span>
             </button>
           </div>
@@ -283,11 +287,11 @@ function CartPage() {
             <label className="checkout-field">
               <span>
                 <UserIcon />
-                <em>Prenom</em>
+                <em>{t("cart.firstName")}</em>
               </span>
               <input
                 type="text"
-                placeholder="Votre prenom"
+                placeholder={t("cart.firstNamePlaceholder")}
                 value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
                 required
@@ -297,11 +301,11 @@ function CartPage() {
             <label className="checkout-field">
               <span>
                 <UserIcon />
-                <em>Nom</em>
+                <em>{t("cart.lastName")}</em>
               </span>
               <input
                 type="text"
-                placeholder="Votre nom"
+                placeholder={t("cart.lastNamePlaceholder")}
                 value={lastName}
                 onChange={(event) => setLastName(event.target.value)}
                 required
@@ -312,11 +316,11 @@ function CartPage() {
           <label className="checkout-field">
             <span>
               <PhoneIcon />
-              <em>Numero de telephone</em>
+              <em>{t("cart.phone")}</em>
             </span>
             <input
               type="tel"
-              placeholder="+216 XX XXX XXX"
+              placeholder={t("cart.phonePlaceholder")}
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               required
@@ -327,10 +331,10 @@ function CartPage() {
             <label className="checkout-field">
               <span>
                 <LocationIcon />
-                <em>Adresse de livraison</em>
+                <em>{t("cart.deliveryAddress")}</em>
               </span>
               <textarea
-                placeholder="Saisissez votre adresse complete"
+                placeholder={t("cart.deliveryAddressPlaceholder")}
                 value={deliveryAddress}
                 onChange={(event) => setDeliveryAddress(event.target.value)}
                 required
@@ -342,8 +346,8 @@ function CartPage() {
                 <PickupIcon />
               </span>
               <div>
-                <strong>Retrait sur place confirme</strong>
-                <p>Recuperez votre commande en local environ 15 minutes apres validation.</p>
+                <strong>{t("cart.pickupConfirmed")}</strong>
+                <p>{t("cart.pickupConfirmedDesc")}</p>
               </div>
             </div>
           )}
@@ -351,13 +355,13 @@ function CartPage() {
           <label className="checkout-field">
             <span>
               <PointsIcon />
-              <em>Utiliser mes points</em>
+              <em>{t("cart.usePoints")}</em>
             </span>
             <input
               type="number"
               min="0"
               step="100"
-              placeholder="Par tranche de 100 points"
+              placeholder={t("cart.usePointsPlaceholder")}
               value={redeemPoints}
               onChange={(event) => setRedeemPoints(event.target.value)}
             />
@@ -366,10 +370,10 @@ function CartPage() {
           <label className="checkout-field">
             <span>
               <NotesIcon />
-              <em>Notes supplementaires</em>
+              <em>{t("cart.notes")}</em>
             </span>
             <textarea
-              placeholder="Instructions pour la cuisine ou la livraison"
+              placeholder={t("cart.notesPlaceholder")}
               value={notes}
               onChange={(event) => setNotes(event.target.value)}
             />
@@ -378,17 +382,17 @@ function CartPage() {
           <div className="checkout-actions">
             <button type="submit" className="button-primary checkout-submit" disabled={!items.length}>
               <ConfirmIcon />
-              <span>Confirmer la commande</span>
+              <span>{t("cart.submit")}</span>
             </button>
           </div>
           {message ? (
             <StatusNotice
               variant="success"
-              title="Commande envoyee avec succes"
-              message={`${message} Vos points fidelite seront mis a jour automatiquement.`}
+              title={t("cart.noticeSuccessTitle")}
+              message={t("cart.noticeSuccessBody", { message })}
             />
           ) : null}
-          {error ? <StatusNotice variant="error" title="Action impossible" message={error} /> : null}
+          {error ? <StatusNotice variant="error" title={t("cart.noticeErrorTitle")} message={error} /> : null}
         </form>
       </section>
     </div>

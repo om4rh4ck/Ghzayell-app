@@ -6,26 +6,33 @@ import { localMenuCategories } from "../data/localMenu.js";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../hooks/useAuth";
 import { useI18n } from "../hooks/useI18n.js";
+import { translateMenuCategory, translateMenuSubtitle } from "../utils/menuCategoryLabel.js";
 
 function CategoryIcon({ category }) {
   const normalized = String(category || "").toLowerCase();
-  const icon = normalized.includes("boisson")
-    ? "🥤"
-    : normalized.includes("brik")
-      ? "🥟"
-      : normalized.includes("plat")
-        ? "🍽️"
-        : normalized.includes("ojja")
-          ? "🍳"
-          : normalized.includes("supplement")
-            ? "➕"
-            : normalized.includes("sandwich")
-              ? "🥖"
-              : normalized.includes("huitieme")
-                ? "🧾"
-                : "🍴";
+  let icon = "MN";
 
-  return <span className="menu-category-filter__icon" aria-hidden="true">{icon}</span>;
+  if (normalized.includes("boisson")) {
+    icon = "BO";
+  } else if (normalized.includes("brik")) {
+    icon = "BR";
+  } else if (normalized.includes("plat")) {
+    icon = "PL";
+  } else if (normalized.includes("ojja")) {
+    icon = "OJ";
+  } else if (normalized.includes("supplement")) {
+    icon = "+";
+  } else if (normalized.includes("sandwich")) {
+    icon = "SW";
+  } else if (normalized.includes("huitieme")) {
+    icon = "1/4";
+  }
+
+  return (
+    <span className="menu-category-filter__icon" aria-hidden="true">
+      {icon}
+    </span>
+  );
 }
 
 const ALL_CATEGORY = "__all__";
@@ -33,7 +40,7 @@ const ALL_CATEGORY = "__all__";
 function MenuPage() {
   const { addToCart } = useCart();
   const { user } = useAuth();
-  const { t } = useI18n();
+  const { language, t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const [products, setProducts] = useState([]);
@@ -93,11 +100,12 @@ function MenuPage() {
               onClick={() => setSelectedCategory(category)}
             >
               <CategoryIcon category={category} />
-              <span>{category === ALL_CATEGORY ? t("menu.all") : category}</span>
+              <span>{category === ALL_CATEGORY ? t("menu.all") : translateMenuCategory(language, category)}</span>
             </button>
           ))}
         </div>
-        {message && <p className="message success">{message}</p>}
+        {error ? <p className="message error">{error}</p> : null}
+        {message ? <p className="message success">{message}</p> : null}
         <section className="product-grid product-grid--mobile">
           {filteredOnlineProducts.map((product) => (
             <ProductCard key={product._id} product={product} onAddToCart={handleAddToCart} />
@@ -114,8 +122,8 @@ function MenuPage() {
           {localMenuCategories.map((category) => (
             <section key={category.title} className="menu-local-board menu-local-board--detailed">
               <div className="menu-local-board__heading">
-                <h3>{category.title}</h3>
-                {category.subtitle ? <p>{category.subtitle}</p> : null}
+                <h3>{translateMenuCategory(language, category.title)}</h3>
+                {category.subtitle ? <p>{translateMenuSubtitle(language, category.subtitle)}</p> : null}
               </div>
               <div className="menu-local-list">
                 {category.items.map((item) => (
