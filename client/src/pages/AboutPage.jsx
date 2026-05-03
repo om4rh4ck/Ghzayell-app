@@ -7,7 +7,7 @@ function AboutPage() {
     <div className="stack about-page">
       <section className="card about-hero">
         <div className="about-hero__media">
-          <img src="/assets/mghzayell.png" alt="Equipe Ghzaielle" />
+          <img src="/assets/mghzayell.png" alt="Equipe Ghzaiel" />
         </div>
         <div className="about-hero__content">
           <span className="eyebrow">{t("about.eyebrow")}</span>

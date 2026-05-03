@@ -64,7 +64,7 @@ function AdminGalleryPage() {
       <section className="section-heading">
         <div>
           <span className="eyebrow">Evenements</span>
-          <h1>Gestion des evenements Ghzaielle</h1>
+          <h1>Gestion des evenements Ghzaiel</h1>
           <p>Ajoutez des images et des videos avec upload direct pour vos evenements et reussites.</p>
         </div>
       </section>

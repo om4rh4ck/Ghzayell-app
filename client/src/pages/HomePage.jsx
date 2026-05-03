@@ -55,7 +55,7 @@ function HomePage() {
     {
       key: "brik",
       name: "Brik",
-      description: "Notre specialite croustillante de Ghzaielle",
+      description: "Notre specialite croustillante de Ghzaiel",
       price: 3,
       image: ""
     },
@@ -74,8 +74,8 @@ function HomePage() {
   const menuQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
     `${publicSiteUrl}/menu`
   )}`;
-  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent("Rue Med Ferjeni, Houmt Souk 4180")}&z=15&output=embed`;
-  const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Rue Med Ferjeni, Houmt Souk 4180")}`;
+  const mapEmbedUrl = `https://maps.app.goo.gl/msqbJzAYqBvWmSL36`;
+  const mapLinkUrl = `https://maps.app.goo.gl/msqbJzAYqBvWmSL36`;
 
   useEffect(() => {
     const resolvePrice = (product, fallbackPrice) =>
@@ -97,7 +97,7 @@ function HomePage() {
           {
             key: "brik",
             name: brikProduct?.name || "Brik",
-            description: "Notre specialite croustillante de Ghzaielle",
+            description: "Notre specialite croustillante de Ghzaiel",
             price: resolvePrice(brikProduct, 3),
             image: brikProduct?.image || ""
           },
