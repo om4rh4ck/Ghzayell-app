@@ -146,8 +146,9 @@ const buildSummaryText = (order) => {
   ].join("\n");
 };
 
-const buildBusinessOrderSubject = (order) => `Nouvelle commande #${order.id} - ${BRAND.name}`;
-const buildCustomerOrderSubject = (order) => `Votre commande #${order.id} a bien ete recue - ${BRAND.name}`;
+const buildBusinessOrderSubject = (order) => `Commande ${order.id} - ${BRAND.name}`;
+const buildCustomerOrderSubject = (order) => `Commande ${order.id} recue - ${BRAND.name}`;
+const buildSharedOrderSubject = (order) => `Commande ${order.id} - ${BRAND.name}`;
 
 const buildOrderText = (order) => {
   const header = [`Nouvelle commande ${BRAND.name}`, `Commande #${order.id}`, ""];
@@ -396,6 +397,7 @@ const sendMail = async ({ to, subject, text, html, replyTo }) => {
 export const sendOrderCreatedEmails = async (order) => {
   const customerEmail = String(order?.user?.email || "").trim().toLowerCase();
   const businessEmail = readEnv("ORDER_NOTIFICATION_EMAIL").toLowerCase();
+  const hasSharedRecipient = customerEmail && businessEmail && customerEmail === businessEmail;
 
   if (!isOrderEmailEnabled()) {
     if (!didWarnAboutEmailConfig) {
@@ -409,28 +411,39 @@ export const sendOrderCreatedEmails = async (order) => {
 
   const tasks = [];
 
-  if (businessEmail) {
+  if (hasSharedRecipient) {
     tasks.push(
       sendMail({
         to: businessEmail,
-        replyTo: customerEmail || undefined,
-        subject: buildBusinessOrderSubject(order),
-        text: buildOrderText(order),
-        html: buildOrderHtml(order)
-      })
-    );
-  }
-
-  if (customerEmail) {
-    tasks.push(
-      sendMail({
-        to: customerEmail,
         replyTo: businessEmail || undefined,
-        subject: buildCustomerOrderSubject(order),
-        text: buildCustomerOrderText(order),
-        html: buildCustomerIntroHtml(order)
+        subject: buildSharedOrderSubject(order),
+        text: buildCustomerOrderText(order)
       })
     );
+  } else {
+    if (businessEmail) {
+      tasks.push(
+        sendMail({
+          to: businessEmail,
+          replyTo: customerEmail || undefined,
+          subject: buildBusinessOrderSubject(order),
+          text: buildOrderText(order),
+          html: buildOrderHtml(order)
+        })
+      );
+    }
+
+    if (customerEmail) {
+      tasks.push(
+        sendMail({
+          to: customerEmail,
+          replyTo: businessEmail || undefined,
+          subject: buildCustomerOrderSubject(order),
+          text: buildCustomerOrderText(order),
+          html: buildCustomerIntroHtml(order)
+        })
+      );
+    }
   }
 
   if (!tasks.length) {
