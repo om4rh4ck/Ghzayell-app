@@ -7,16 +7,16 @@ const EMAIL_REQUIRED_ENV = ["SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASS", 
 
 const BRAND = {
   name: "Ghzaiel Food",
-  accent: "#d94f2b",
-  accentDark: "#912d18",
-  accentSoft: "#fff0e7",
-  gold: "#f2b84b",
-  ink: "#211710",
-  softInk: "#69584e",
-  line: "#ead9cf",
-  panel: "#fffaf6",
-  canvas: "#f6efe9",
-  success: "#255b36"
+  accent: "#2563eb",
+  accentDark: "#162d72",
+  accentSoft: "#eaf2ff",
+  gold: "#60a5fa",
+  ink: "#0f172a",
+  softInk: "#475569",
+  line: "#dbe4f0",
+  panel: "#ffffff",
+  canvas: "#f4f7fb",
+  success: "#0f766e"
 };
 
 const readEnv = (key, fallback = "") => {
@@ -232,27 +232,33 @@ const buildSharedOrderText = (order) => {
 
 const buildMetricCard = (label, value) => `
   <td style="padding:0 6px 12px 6px;vertical-align:top;">
-    <div style="background:${BRAND.panel};border:1px solid ${BRAND.line};border-radius:20px;padding:16px 14px;box-shadow:0 10px 24px rgba(35,22,15,0.06);">
+    <div style="background:${BRAND.panel};border:1px solid ${BRAND.line};border-radius:18px;padding:18px 16px;box-shadow:0 10px 30px rgba(15,23,42,0.06);">
       <div style="font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:${BRAND.softInk};margin-bottom:6px;">${escapeHtml(
         label
       )}</div>
-      <div style="font-size:20px;font-weight:700;color:${BRAND.ink};">${escapeHtml(value)}</div>
+      <div style="font-size:21px;font-weight:700;color:${BRAND.ink};line-height:1.25;">${escapeHtml(value)}</div>
     </div>
   </td>
 `;
 
 const buildBadge = (label) =>
-  `<span style="display:inline-block;padding:7px 12px;border-radius:999px;background:${BRAND.accentSoft};color:${BRAND.accentDark};font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;">${escapeHtml(
+  `<span style="display:inline-block;padding:7px 12px;border-radius:999px;background:${BRAND.accentSoft};color:${BRAND.accentDark};font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;border:1px solid #c9dbff;">${escapeHtml(
     label
   )}</span>`;
 
 const buildCardShell = (title, content) => `
-  <div style="background:${BRAND.panel};border:1px solid ${BRAND.line};border-radius:24px;padding:22px 22px 18px;box-shadow:0 12px 26px rgba(33,23,16,0.06);">
+  <div style="background:${BRAND.panel};border:1px solid ${BRAND.line};border-radius:22px;padding:22px 22px 18px;box-shadow:0 14px 34px rgba(15,23,42,0.05);">
     <div style="font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:${BRAND.softInk};margin-bottom:12px;font-weight:700;">${escapeHtml(
       title
     )}</div>
     ${content}
   </div>
+`;
+
+const buildPlatformLabel = (label) => `
+  <div style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.74);margin-bottom:10px;">${escapeHtml(
+    label
+  )}</div>
 `;
 
 const buildInfoTableRows = (order) =>
@@ -334,29 +340,29 @@ const buildOrderHtml = (order) => {
 
   return `
     <div style="margin:0;padding:24px 0;background:${BRAND.canvas};font-family:Arial,sans-serif;color:${BRAND.ink};">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:32px;overflow:hidden;border:1px solid ${BRAND.line};box-shadow:0 24px 55px rgba(33,23,16,0.08);">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:30px;overflow:hidden;border:1px solid ${BRAND.line};box-shadow:0 24px 60px rgba(15,23,42,0.08);">
         <tr>
-          <td style="padding:34px 34px;background:radial-gradient(circle at top right, ${BRAND.gold}, transparent 28%),linear-gradient(135deg, ${BRAND.accentDark}, ${BRAND.accent});color:#ffffff;">
+          <td style="padding:34px 34px;background:radial-gradient(circle at top right, rgba(96,165,250,0.45), transparent 28%),linear-gradient(135deg, ${BRAND.accentDark}, ${BRAND.accent});color:#ffffff;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
               <div>
-                <div style="font-size:14px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.9;margin-bottom:12px;">${escapeHtml(
-                  BRAND.name
-                )}</div>
+                ${buildPlatformLabel("Order Management")}
+                <div style="font-size:15px;font-weight:700;letter-spacing:0.02em;margin-bottom:12px;">${escapeHtml(BRAND.name)}</div>
                 ${buildBadge("Nouvelle commande")}
-                <h1 style="margin:16px 0 10px;font-size:34px;line-height:1.1;">Commande #${escapeHtml(order.id)}</h1>
-                <p style="margin:0;font-size:15px;line-height:1.7;max-width:520px;">
-              Une nouvelle commande a ete enregistree sur ${escapeHtml(BRAND.name)}. Vous trouverez ci-dessous toutes les informations client, produit et paiement.
+                <h1 style="margin:16px 0 10px;font-size:34px;line-height:1.08;">Commande #${escapeHtml(order.id)}</h1>
+                <p style="margin:0;font-size:15px;line-height:1.7;max-width:520px;color:rgba(255,255,255,0.88);">
+              Une nouvelle commande a ete enregistree sur votre plateforme. Toutes les donnees client, produits et paiement sont centralisees ci-dessous.
                 </p>
               </div>
               <div style="min-width:120px;text-align:right;">
-                <div style="font-size:12px;opacity:0.82;margin-bottom:8px;">Total a encaisser</div>
-                <div style="font-size:30px;font-weight:800;line-height:1;">${escapeHtml(formatMoney(meta.total))}</div>
+                <div style="font-size:12px;opacity:0.78;margin-bottom:8px;">Montant total</div>
+                <div style="font-size:30px;font-weight:800;line-height:1;margin-bottom:10px;">${escapeHtml(formatMoney(meta.total))}</div>
+                <div style="font-size:12px;color:rgba(255,255,255,0.78);">Statut: ${escapeHtml(order.status || "pending")}</div>
               </div>
             </div>
           </td>
         </tr>
         <tr>
-          <td style="padding:24px 26px 6px;background:linear-gradient(180deg,#fffaf6 0%,#ffffff 100%);">
+          <td style="padding:24px 26px 6px;background:linear-gradient(180deg,#f8fbff 0%,#ffffff 100%);">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 ${buildMetricCard("Client", getCustomerName(order))}
@@ -390,8 +396,8 @@ const buildOrderHtml = (order) => {
               "Resume financier",
               `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${buildSummaryRows(order)}</table>`
             )}
-            <div style="margin-top:18px;padding:16px 18px;background:#f5fbf7;border:1px solid #cde7d5;border-radius:18px;color:${BRAND.success};font-size:14px;line-height:1.6;">
-              Cet email est envoye automatiquement apres validation de la creation de commande sur le site. Repondez directement a ce message pour contacter rapidement le client.
+            <div style="margin-top:18px;padding:16px 18px;background:#f1f8f7;border:1px solid #c6ece7;border-radius:18px;color:${BRAND.success};font-size:14px;line-height:1.6;">
+              Notification transactionnelle generee automatiquement par la plateforme. Repondez directement a cet email pour contacter rapidement le client.
             </div>
           </td>
         </tr>
@@ -402,24 +408,21 @@ const buildOrderHtml = (order) => {
 
 const buildCustomerIntroHtml = (order) => `
   <div style="margin:0;padding:24px 0;background:${BRAND.canvas};font-family:Arial,sans-serif;color:${BRAND.ink};">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:32px;overflow:hidden;border:1px solid ${BRAND.line};box-shadow:0 24px 55px rgba(33,23,16,0.08);">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:30px;overflow:hidden;border:1px solid ${BRAND.line};box-shadow:0 24px 60px rgba(15,23,42,0.08);">
       <tr>
-        <td style="padding:34px 34px;background:radial-gradient(circle at top right, ${BRAND.gold}, transparent 28%),linear-gradient(135deg, ${BRAND.accentDark}, ${BRAND.accent});color:#ffffff;">
+        <td style="padding:34px 34px;background:radial-gradient(circle at top right, rgba(96,165,250,0.45), transparent 28%),linear-gradient(135deg, ${BRAND.accentDark}, ${BRAND.accent});color:#ffffff;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;">
             <div>
-              <div style="font-size:14px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.9;margin-bottom:12px;">${escapeHtml(
-                BRAND.name
-              )}</div>
+              ${buildPlatformLabel("Order Confirmation")}
+              <div style="font-size:15px;font-weight:700;letter-spacing:0.02em;margin-bottom:12px;">${escapeHtml(BRAND.name)}</div>
               ${buildBadge("Commande recue")}
-              <h1 style="margin:16px 0 10px;font-size:34px;line-height:1.1;">Merci ${escapeHtml(getCustomerName(order))}</h1>
-              <p style="margin:0;font-size:15px;line-height:1.7;max-width:520px;">
-            Votre commande #${escapeHtml(order.id)} a bien ete enregistree chez ${escapeHtml(
-              BRAND.name
-            )}. Voici votre recapitulatif.
+              <h1 style="margin:16px 0 10px;font-size:34px;line-height:1.08;">Merci ${escapeHtml(getCustomerName(order))}</h1>
+              <p style="margin:0;font-size:15px;line-height:1.7;max-width:520px;color:rgba(255,255,255,0.88);">
+            Votre commande #${escapeHtml(order.id)} a bien ete enregistree. Retrouvez ci-dessous un recapitulatif clair de votre achat.
               </p>
             </div>
             <div style="min-width:120px;text-align:right;">
-              <div style="font-size:12px;opacity:0.82;margin-bottom:8px;">Total de la commande</div>
+              <div style="font-size:12px;opacity:0.78;margin-bottom:8px;">Montant total</div>
               <div style="font-size:30px;font-weight:800;line-height:1;">${escapeHtml(
                 formatMoney(getOrderMeta(order).total)
               )}</div>
@@ -428,7 +431,7 @@ const buildCustomerIntroHtml = (order) => `
         </td>
       </tr>
       <tr>
-        <td style="padding:24px 26px 6px;background:linear-gradient(180deg,#fffaf6 0%,#ffffff 100%);">
+        <td style="padding:24px 26px 6px;background:linear-gradient(180deg,#f8fbff 0%,#ffffff 100%);">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
             <tr>
               ${buildMetricCard("Commande", `#${order.id}`)}
@@ -456,14 +459,14 @@ const buildCustomerIntroHtml = (order) => `
           )}
         </td>
       </tr>
-      <tr>
-        <td style="padding:26px 32px 32px;">
-          ${buildCardShell(
-            "Resume",
-            `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${buildSummaryRows(order)}</table>`
-          )}
-          <div style="margin-top:18px;padding:16px 18px;background:${BRAND.accentSoft};border:1px solid #f1c9b9;border-radius:18px;color:${BRAND.accentDark};font-size:14px;line-height:1.6;">
-            Conservez cet email comme recapitulatif de votre achat. Nous vous contacterons si un detail supplementaire est necessaire.
+        <tr>
+          <td style="padding:26px 32px 32px;">
+            ${buildCardShell(
+              "Resume",
+              `<table role="presentation" width="100%" cellpadding="0" cellspacing="0">${buildSummaryRows(order)}</table>`
+            )}
+          <div style="margin-top:18px;padding:16px 18px;background:${BRAND.accentSoft};border:1px solid #c9dbff;border-radius:18px;color:${BRAND.accentDark};font-size:14px;line-height:1.6;">
+            Conservez cet email comme preuve de commande. Vous recevrez les prochaines mises a jour sur cette meme adresse.
           </div>
         </td>
       </tr>
