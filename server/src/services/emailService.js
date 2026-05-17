@@ -372,13 +372,15 @@ const sendMail = async ({ to, subject, text, html, replyTo }) => {
     return null;
   }
 
+  const useHtmlEmail = readBooleanEnv("ENABLE_HTML_ORDER_EMAIL", false);
+
   const info = await getTransporter().sendMail({
     from: readEnv("MAIL_FROM"),
     to,
     replyTo,
     subject,
     text,
-    html
+    ...(useHtmlEmail && html ? { html } : {})
   });
 
   console.log(`Order email sent to ${to}`, {
