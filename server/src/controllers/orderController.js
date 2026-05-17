@@ -107,7 +107,7 @@ export const createOrder = async (req, res) => {
     const [orders] = await Promise.all([fetchOrders({ userId: req.user.id, includeUser: true })]);
     const createdOrder = orders.find((order) => order.id === String(orderResult.insertId));
     if (createdOrder) {
-      void sendOrderCreatedEmails(createdOrder).catch((error) => {
+      await sendOrderCreatedEmails(createdOrder).catch((error) => {
         console.error(`Failed to send order email for order #${createdOrder.id}`, error);
       });
     }
