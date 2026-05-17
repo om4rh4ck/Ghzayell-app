@@ -17,8 +17,6 @@ const BRAND = {
   success: "#255b36"
 };
 
-const DEFAULT_LOGO_PATH = "/assets/ghzaiel-logo-clean.png";
-
 const readEnv = (key, fallback = "") => {
   const raw = String(process.env[key] ?? fallback).trim();
   return raw.replace(/^['"]|['"]$/g, "").trim();
@@ -28,21 +26,6 @@ const readBooleanEnv = (key, fallback = false) => {
   const value = readEnv(key, String(fallback));
   return value.toLowerCase() === "true";
 };
-
-const getBaseUrl = () => readEnv("PUBLIC_APP_URL") || readEnv("CLIENT_URL");
-
-const getAbsoluteUrl = (value) => {
-  const raw = String(value || "").trim();
-  if (!raw) return "";
-  if (/^https?:\/\//i.test(raw)) return raw;
-
-  const baseUrl = getBaseUrl();
-  if (!baseUrl) return "";
-
-  return `${baseUrl.replace(/\/$/, "")}/${raw.replace(/^\//, "")}`;
-};
-
-const getBrandLogoUrl = () => readEnv("EMAIL_LOGO_URL") || getAbsoluteUrl(DEFAULT_LOGO_PATH);
 
 const formatMoney = (value) => `${Number(value || 0).toFixed(2)} DT`;
 
@@ -186,30 +169,6 @@ const buildMetricCard = (label, value) => `
   </td>
 `;
 
-const buildHeaderBrandBlock = () => {
-  const logoUrl = getBrandLogoUrl();
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
-      <tr>
-        ${
-          logoUrl
-            ? `<td style="padding-right:14px;vertical-align:middle;">
-                <img src="${escapeHtml(logoUrl)}" alt="${escapeHtml(BRAND.name)}" width="72" style="display:block;max-width:72px;height:auto;" />
-              </td>`
-            : ""
-        }
-        <td style="vertical-align:middle;">
-          <div style="font-size:14px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.9;margin-bottom:4px;">${escapeHtml(
-            BRAND.name
-          )}</div>
-          <div style="font-size:12px;opacity:0.82;">Commande en ligne</div>
-        </td>
-      </tr>
-    </table>
-  `;
-};
-
 const buildInfoTableRows = (order) =>
   getInfoRows(order)
     .map(
@@ -228,21 +187,12 @@ const buildItemsHtml = (items = []) =>
       const quantity = Math.max(Number(item.quantity || 0), 1);
       const unitPrice = Number(item.price || 0);
       const lineTotal = unitPrice * quantity;
-      const image = String(item.image || "").trim();
-      const hasImage = /^https?:\/\//i.test(image) || image.startsWith("/");
 
       return `
         <tr>
           <td style="padding:16px;border-bottom:1px solid ${BRAND.line};vertical-align:top;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
               <tr>
-                <td style="width:74px;vertical-align:top;padding-right:14px;">
-                  ${
-                    hasImage
-                      ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(item.name)}" width="60" height="60" style="display:block;border-radius:14px;object-fit:cover;background:#f0e7e0;" />`
-                      : `<div style="width:60px;height:60px;border-radius:14px;background:${BRAND.canvas};border:1px solid ${BRAND.line};text-align:center;line-height:60px;color:${BRAND.softInk};font-size:12px;">Produit</div>`
-                  }
-                </td>
                 <td style="vertical-align:top;">
                   <div style="font-size:16px;font-weight:700;color:${BRAND.ink};margin-bottom:4px;">${index + 1}. ${escapeHtml(
                     item.name
@@ -301,7 +251,9 @@ const buildOrderHtml = (order) => {
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:28px;overflow:hidden;border:1px solid ${BRAND.line};">
         <tr>
           <td style="padding:28px 32px;background:linear-gradient(135deg, ${BRAND.accentDark}, ${BRAND.accent});color:#ffffff;">
-            ${buildHeaderBrandBlock()}
+            <div style="font-size:14px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.9;margin-bottom:12px;">${escapeHtml(
+              BRAND.name
+            )}</div>
             <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.9;margin-bottom:8px;">Nouvelle commande</div>
             <h1 style="margin:0 0 10px;font-size:32px;line-height:1.15;">Commande #${escapeHtml(order.id)}</h1>
             <p style="margin:0;font-size:15px;line-height:1.6;max-width:520px;">
@@ -357,7 +309,9 @@ const buildCustomerIntroHtml = (order) => `
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:760px;margin:0 auto;background:#ffffff;border-radius:28px;overflow:hidden;border:1px solid ${BRAND.line};">
       <tr>
         <td style="padding:28px 32px;background:linear-gradient(135deg, ${BRAND.accentDark}, ${BRAND.accent});color:#ffffff;">
-          ${buildHeaderBrandBlock()}
+          <div style="font-size:14px;letter-spacing:0.16em;text-transform:uppercase;opacity:0.9;margin-bottom:12px;">${escapeHtml(
+            BRAND.name
+          )}</div>
           <div style="font-size:12px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.9;margin-bottom:8px;">Commande recue</div>
           <h1 style="margin:0 0 10px;font-size:32px;line-height:1.15;">Merci ${escapeHtml(getCustomerName(order))}</h1>
           <p style="margin:0;font-size:15px;line-height:1.6;max-width:520px;">
