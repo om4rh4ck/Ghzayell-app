@@ -14,7 +14,7 @@
     "seed": "npm run seed --prefix server",
     "local:stack": "node .local/run-local-stack.js",
     "build": "npm install --prefix client && npm run build --prefix client",
-    "hostinger:build": "npm install --prefix client && npm run build --prefix client",
+    "hostinger:build": "npm install --prefix server && npm install --prefix client && npm run build --prefix client",
     "start": "node server.js"
   },
   "dependencies": {
@@ -26,7 +26,8 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "mysql2": "^3.14.1"
+    "mysql2": "^3.14.1",
+    "nodemailer": "^8.0.7"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
