@@ -146,17 +146,86 @@ const buildSummaryText = (order) => {
   ].join("\n");
 };
 
+const buildSection = (title, lines = []) => [title, "-".repeat(title.length), ...lines.filter(Boolean), ""].join("\n");
+
 const buildBusinessOrderSubject = (order) => `Commande ${order.id} - ${BRAND.name}`;
 const buildCustomerOrderSubject = (order) => `Commande ${order.id} recue - ${BRAND.name}`;
 const buildSharedOrderSubject = (order) => `Commande ${order.id} - ${BRAND.name}`;
 
-const buildOrderText = (order) => {
-  const header = [`Nouvelle commande ${BRAND.name}`, `Commande #${order.id}`, ""];
-  const infoRows = getInfoRows(order).map(([label, value]) => `${label}: ${value}`);
+const buildBusinessOrderText = (order) => {
+  const customerName = getCustomerName(order);
+  const meta = getOrderMeta(order);
 
-  return [...header, ...infoRows, "", "Produits:", buildItemsText(order.items), "", "Resume:", buildSummaryText(order)].join(
-    "\n"
-  );
+  return [
+    `Nouvelle commande recue par ${BRAND.name}`,
+    `Reference: #${order.id}`,
+    "",
+    buildSection("Client", [
+      `Nom: ${customerName}`,
+      `Email: ${order.user?.email || "Non renseigne"}`,
+      `Telephone: ${order.phone || "Non renseigne"}`,
+      `Compte: ${order.user?.name || "Non renseigne"}`,
+      `ID client: ${order.user?.id || order.user?._id || "Non renseigne"}`
+    ]),
+    buildSection("Commande", [
+      `Date: ${formatDateTime(order.createdAt)}`,
+      `Statut: ${order.status || "pending"}`,
+      `Mode: ${getFulfillmentLabel(order)}`,
+      `Livraison / retrait: ${getDeliveryLabel(order)}`,
+      `Notes: ${order.notes || "Aucune"}`
+    ]),
+    buildSection("Produits", [buildItemsText(order.items)]),
+    buildSection("Resume", [
+      `Articles: ${meta.itemsCount}`,
+      `Sous-total: ${formatMoney(meta.subtotal)}`,
+      `Reduction: ${formatMoney(meta.discount)}`,
+      `Points utilises: ${meta.pointsRedeemed}`,
+      `Points gagnes: ${meta.pointsEarned}`,
+      `Total final: ${formatMoney(meta.total)}`
+    ]),
+    `Action conseillee: ouvrez le tableau de bord ou contactez le client si necessaire.`
+  ].join("\n");
+};
+
+const buildCustomerOrderText = (order) => {
+  const customerName = getCustomerName(order);
+  const meta = getOrderMeta(order);
+
+  return [
+    `Bonjour ${customerName},`,
+    "",
+    `Votre commande #${order.id} a bien ete recue par ${BRAND.name}.`,
+    "",
+    buildSection("Recapitulatif", [
+      `Date: ${formatDateTime(order.createdAt)}`,
+      `Mode: ${getFulfillmentLabel(order)}`,
+      `Livraison / retrait: ${getDeliveryLabel(order)}`,
+      `Telephone: ${order.phone || "Non renseigne"}`,
+      `Notes: ${order.notes || "Aucune"}`
+    ]),
+    buildSection("Vos produits", [buildItemsText(order.items)]),
+    buildSection("Montants", [
+      `Articles: ${meta.itemsCount}`,
+      `Sous-total: ${formatMoney(meta.subtotal)}`,
+      `Reduction: ${formatMoney(meta.discount)}`,
+      `Points utilises: ${meta.pointsRedeemed}`,
+      `Points gagnes: ${meta.pointsEarned}`,
+      `Total final: ${formatMoney(meta.total)}`
+    ]),
+    `Merci pour votre confiance et a bientot chez ${BRAND.name}.`
+  ].join("\n");
+};
+
+const buildSharedOrderText = (order) => {
+  return [
+    `Commande #${order.id} - ${BRAND.name}`,
+    "",
+    buildCustomerOrderText(order),
+    "",
+    buildSection("Copie interne", [
+      `Cette adresse a recu une seule copie pour eviter les doublons lorsque le client et la boite pro sont identiques.`
+    ])
+  ].join("\n");
 };
 
 const buildMetricCard = (label, value) => `
@@ -361,13 +430,6 @@ const buildCustomerIntroHtml = (order) => `
   </div>
 `;
 
-const buildCustomerOrderText = (order) =>
-  [
-    `Merci ${getCustomerName(order)}, votre commande #${order.id} a bien ete recue par ${BRAND.name}.`,
-    "",
-    buildOrderText(order)
-  ].join("\n");
-
 const sendMail = async ({ to, subject, text, html, replyTo }) => {
   if (!to) {
     return null;
@@ -417,7 +479,7 @@ export const sendOrderCreatedEmails = async (order) => {
         to: businessEmail,
         replyTo: businessEmail || undefined,
         subject: buildSharedOrderSubject(order),
-        text: buildCustomerOrderText(order)
+        text: buildSharedOrderText(order)
       })
     );
   } else {
@@ -427,7 +489,7 @@ export const sendOrderCreatedEmails = async (order) => {
           to: businessEmail,
           replyTo: customerEmail || undefined,
           subject: buildBusinessOrderSubject(order),
-          text: buildOrderText(order),
+          text: buildBusinessOrderText(order),
           html: buildOrderHtml(order)
         })
       );
