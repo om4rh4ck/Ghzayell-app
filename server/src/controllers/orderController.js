@@ -1,5 +1,6 @@
 import { getDb } from "../config/db.js";
 import { fetchOrders } from "../services/mysqlService.js";
+import { sendOrderCreatedEmails } from "../services/emailService.js";
 
 const POINTS_PREVIEW_ON_CONFIRM = 10;
 const POINTS_REWARDED_ON_APPROVAL = 15;
@@ -105,6 +106,11 @@ export const createOrder = async (req, res) => {
     await connection.commit();
     const [orders] = await Promise.all([fetchOrders({ userId: req.user.id, includeUser: true })]);
     const createdOrder = orders.find((order) => order.id === String(orderResult.insertId));
+    if (createdOrder) {
+      void sendOrderCreatedEmails(createdOrder).catch((error) => {
+        console.error(`Failed to send order email for order #${createdOrder.id}`, error);
+      });
+    }
     return res.status(201).json(createdOrder);
   } catch (error) {
     await connection.rollback();

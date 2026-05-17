@@ -63,6 +63,13 @@ DB_PORT=3306
 DB_NAME=your_database_name
 DB_USER=your_database_user
 DB_PASSWORD=your_database_password
+SMTP_HOST=smtp.your-provider.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-professional-email@your-domain.com
+SMTP_PASS=your-email-password-or-app-password
+MAIL_FROM="Ghzaiel Food <your-professional-email@your-domain.com>"
+ORDER_NOTIFICATION_EMAIL=your-professional-email@your-domain.com
 ```
 
 ### 4. Seed the database
@@ -73,8 +80,8 @@ npm run seed
 
 This creates:
 
-- Admin user: `admin@ghzaielfood.com` / `Admin123!`
-- Demo customer: `user@ghzaielfood.com` / `User123!`
+- Admin user: `admin@ghzaielfastfood.com` / `Admin123!`
+- Demo customer: `user@ghzaielfastfood.com` / `User123!`
 - Sample menu items and promo prices
 - Sample gallery entries
 - Sample order history
@@ -153,7 +160,23 @@ DB_NAME=your_database_name
 DB_USER=your_database_user
 DB_PASSWORD=your_database_password
 DB_CONNECTION_LIMIT=10
+SMTP_HOST=smtp.your-provider.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-professional-email@your-domain.com
+SMTP_PASS=your-email-password-or-app-password
+MAIL_FROM="Ghzaiel Food <your-professional-email@your-domain.com>"
+ORDER_NOTIFICATION_EMAIL=your-professional-email@your-domain.com
 ```
+
+### Order email notifications
+
+When a customer places an order:
+
+- the customer receives an email summary of the order
+- your professional mailbox defined in `ORDER_NOTIFICATION_EMAIL` receives the same order
+
+If SMTP variables are missing, the order is still created and the server simply skips email sending.
 
 ### First production setup
 
